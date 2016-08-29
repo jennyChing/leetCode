@@ -13,8 +13,8 @@ class Solution(object):
         :rtype: ListNode
         """
         sorted_list, heap = [], []
-        #if lists == []:
-         #   return []
+        if lists == []:
+            return []
 
         for lst in lists:
             while lst:
