@@ -1,4 +1,3 @@
-import heapq
 class ListNode(object):
     def __init__(self, x):
         self.val = x
@@ -13,34 +12,21 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        sorted_list = []
-        if l1 == []:
-            return l2
-        elif l2 == []:
-            return l1
-
-        while l1.next != None and l2.next != None:
-            print(l1.val, l2.val)
+        tail = dummy = ListNode(0)
+        while l1 and l2:
             if l1.val < l2.val:
-                sorted_list.append(l1.val)
+                tail.next = l1
+                tail = tail.next
                 l1 = l1.next
-            elif l1.val > l2.val:
-                sorted_list.append(l2.val)
-                l2 = l2.next
             else:
-                print(sorted_list)
-                sorted_list.append(l1.val)
-                sorted_list.append(l2.val)
+                tail.next = l2
+                tail = tail.next
                 l2 = l2.next
-                l1 = l1.next
-        print(sorted_list)
-        if l1.val > l2.val:
-            sorted_list.append(l2.val)
-            sorted_list.append(l1.val)
+        if l1 == None:
+            tail.next = l2
         else:
-            sorted_list.append(l1.val)
-            sorted_list.append(l2.val)
-        print(sorted_list)
+            tail.next = l1
+        return dummy.next
 
 if __name__ == '__main__':
     s = Solution()
@@ -50,5 +36,8 @@ if __name__ == '__main__':
     list2 = ListNode(2)
     list2.next = ListNode(5)
     list2.next.next = ListNode(6)
-    s.mergeTwoLists(list1, list2)
+    res = s.mergeTwoLists(list1, list2)
+    while res != None:
+        print(res.val)
+        res = res.next
 
