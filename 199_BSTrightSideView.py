@@ -9,7 +9,7 @@ class TreeNode(object):
         self.val = x
         self.left = None
         self.right = None
-
+from collections import deque
 class Solution(object):
     def rightSideView(self, root):
         """
@@ -17,15 +17,29 @@ class Solution(object):
         :rtype: List[int]
         :idea: loop with BFS to find the right path (all use .right value)
         """
-        rightView = []
-        while root:
-            rightView.append(root.val)
-            root = root.right
-        return rightView
+        if root == None:
+            return []
+        currLevel, nextLevel = deque([root]), deque([])
+        rv = []
+        lev = 0
+        while currLevel:
+            lev += 1
+            rv.append(currLevel[0].val)
+            while currLevel:
+                node = currLevel.popleft()
+                print(lev, node.val)
+                if node.right:
+                    nextLevel.append(node.right)
+                if node.left:
+                    nextLevel.append(node.left)
+            currLevel, nextLevel = nextLevel, deque([])
+        return rv
 if __name__ == '__main__':
     root = TreeNode(1)
     root.right = TreeNode(3)
+    root.left = TreeNode(3)
     root.right.right = TreeNode(4)
+    root.right.right.right = TreeNode(4)
     res = Solution().rightSideView(root)
     print(res)
 
