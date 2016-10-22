@@ -14,18 +14,17 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        cnt = 0
         copy = odd = curr = head
-        while head:
-            cnt += 1
-            head = head.next
-        print(cnt)
         currSteps = 0
-        while currSteps < cnt // 2:
-            odd = curr
+        while odd:
             print(currSteps)
             for _ in range(currSteps + 2):
-                odd = odd.next
+                try:
+                    odd = odd.next
+                except:
+                    break
+            if not odd:
+                break
             try:
                 tail = odd.next
             except:
@@ -45,11 +44,11 @@ if __name__ == '__main__':
     head = ListNode(1)
     head.next = ListNode(2)
     head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
-    head.next.next.next.next = ListNode(5)
-    head.next.next.next.next.next = ListNode(6)
-    head.next.next.next.next.next.next = ListNode(7)
-    head.next.next.next.next.next.next.next = ListNode(8)
+    #head.next.next.next = ListNode(4)
+    #head.next.next.next.next = ListNode(5)
+    #head.next.next.next.next.next = ListNode(6)
+    #head.next.next.next.next.next.next = ListNode(7)
+    #head.next.next.next.next.next.next.next = ListNode(8)
     res = Solution().oddEvenList(head)
     while res:
         print(res.val)
