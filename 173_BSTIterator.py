@@ -17,40 +17,39 @@ class BSTIterator(object):
         """
         :type root: TreeNode
         """
-        self._data = []
-        self._push_all(root)
+        # inorder tree traversal (left > root > right)
+        self._inorder_stack = []
+# use the function to first init _inorder_stack with the left subtree down to most left element (= the first smallest element)
+        self._inorder_traverse(root)
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        return relf._data
+        return self._inorder_stack
 
     def next(self):
         """
         :rtype: int
         """
-        cand = self._data.pop()
-        self._push_all(cand.right)
+        cand = self._inorder_stack.pop()
+        self._inorder_traverse(cand.right)
         return cand.val
 
-    def _push_all(self, root):
+    def _inorder_traverse(self, root):
         while root:
-            print(self._data)
-            self._data += root,
+            self._inorder_stack.append(root)
             root = root.left
-
 
 # Your BSTIterator will be called like this:
 # i, v = BSTIterator(root), []
 # while i.hasNext(): v.append(i.next())
 if __name__ == '__main__':
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.left.right = TreeNode(5)
-    root.right = TreeNode(3)
-    root.right.right = TreeNode(4)
+    root = TreeNode(3)
+    root.left = TreeNode(1)
+    root.left.right = TreeNode(2)
+    root.right = TreeNode(4)
+    root.right.right = TreeNode(5)
     i, v = BSTIterator(root), []
     while i.hasNext():
-        v += i.next()
-        print(v)
+        v += i.next(),
