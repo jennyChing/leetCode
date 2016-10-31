@@ -17,31 +17,33 @@ class TreeNode(object):
         self.right = None
 
 class Solution(object):
+    def __direct_build(self, start, end):
+        if start >= end:
+            return None
+        mid = (start + end) // 2
+    # finish building left subtree first
+        left_subtree = self.__direct_build(start, mid)
+        root = TreeNode(self._head.val)
+        root.left = left_subtree
+        self._head = self._head.next
+    # build right tree here
+        root.right = self.__direct_build(mid + 1, end)
+    # travese to get the mid first
+        return root
+
     def sortedListToBST(self, head):
+        self._head = head
         """
         :type nums: List[int]
         :rtype: TreeNode
-        careful not to pass the whole linkedlist into left root.left recursion
+        traverse only once to implement te O(n) solution
         """
-        if not head:
-            return None
-        fast = slow = head
-        dummy = copy = ListNode(0)
+        start, end = 0, 0
+        while head:
+            head = head.next
+            end += 1
+        return self.__direct_build(start, end)
 
-# keep a copy that records the part that should be pass to the left recursive
-        copy.next = head
-
-        # be sure to check both fast and fast.next
-        while fast and fast.next:
-            copy = copy.next
-            slow = slow.next
-            fast = fast.next.next
-
-# keep the copy with value from dummy.next to the one before slow (left part of the linkedList
-        copy.next = None
-        root = TreeNode(slow.val)
-        root.left, root.right = self.sortedListToBST(dummy.next), self.sortedListToBST(slow.next)
-        return root
 if __name__ == '__main__':
    head = ListNode(1)
    head.next = ListNode(2)

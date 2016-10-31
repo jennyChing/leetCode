@@ -28,29 +28,30 @@ class Iterator(object):
         Initializes an iterator object to the beginning of a list.
         :type nums: List[int]
         """
-        print(nums)
-        self.nums = nums
-        self.curr = -1
+        self._iter = iter(nums)
+        try:
+            self.copy = next(self._iter) # int
+        except:
+            self.copy = None
 
     def hasNext(self):
         """
         Returns true if the iteration has more elements.
         :rtype: bool
         """
-        print(self.nums, self.curr)
-        try:
-            if self.nums[self.curr + 1]:
-                return True
-        except:
-            return False
+        return self.copy is not None
 
     def next(self):
         """
         Returns the next element in the iteration.
         :rtype: int
         """
-        self.curr += 1
-        return self.nums[self.curr]
+        temp = self.copy
+        try:
+            self.copy = next(self._iter) # int
+        except:
+            self.copy = None
+        return temp
 
 class PeekingIterator(object):
     def __init__(self, iterator):
@@ -58,38 +59,55 @@ class PeekingIterator(object):
         Initialize your data structure here.
         :type iterator: Iterator
         """
-        self.cache = None
-        self.iterator = iterator
-        print(iterator.hasNext())
-        if iterator.hasNext():
-            self.cache = Iterator.next(iterator)
+        self._iter = iterator
+        if self._iter.hasNext(): # self._iter is pointing at the next ppl
+            self.copy = self._iter.next()
+        else:
+            self.copy = None
 
     def peek(self):
         """
         Returns the next element in the iteration without advancing the iterator.
         :rtype: int
+        save a copy so that you don't really go to the next one when peeking
         """
-        return self.cache
+        return self.copy
 
     def next(self):
         """
         :rtype: int
         """
-        return self.iterator.next()
+        temp = self.copy
+        if self._iter.hasNext(): # self._iter is pointing at the next ppl
+            self.copy = self._iter.next()
+        else:
+            self.copy = None
+        return temp
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        return True if self.cache else False
-
+        return self.copy is not None
 
 if __name__ == '__main__':
     nums = [1, 2, 3]
-
-# Your PeekingIterator object will be instantiated and called as such:
-    iter = PeekingIterator(Iterator(nums))
-    while iter.hasNext():
-        val = iter.peek()   # Get the next element but not advance the iterator.
-        iter.next()         # Should return the same value as [val].
+    it = Iterator(nums)
+    assert it.hasNext()
+    assert it.next() == 1
+    assert it.hasNext()
+    assert it.next() == 2
+    assert it.hasNext()
+    assert it.next() == 3
+    assert not it.hasNext()
+    it = Iterator(nums)
+    p = PeekingIterator(it)
+    assert p.hasNext()
+    assert p.next() == 1
+    assert p.hasNext()
+    assert p.peek() == 2
+    assert p.next() == 2
+    assert p.hasNext()
+    assert p.next() == 3
+    assert not p.hasNext()
 
