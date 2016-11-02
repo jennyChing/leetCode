@@ -17,11 +17,11 @@ class Solution(object):
         if head == None:
             return
         tort, hare = head, head
-        while tort.next and hare.next:
+        while hare.next and hare.next.next:
             tort = tort.next
             hare = hare.next.next
             if tort == hare:
-                hare = head
+                tort = head
                 while tort != head:
                     tort = tort.next
                     hare = hare.next
@@ -30,5 +30,6 @@ class Solution(object):
 if __name__ == '__main__':
     head = ListNode(3)
     head.next = ListNode(2)
-    head.next.next = head
+    head.next.next = ListNode(1)
+    head.next.next.next = head
     print(Solution().detectCycle(head))

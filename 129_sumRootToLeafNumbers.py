@@ -30,28 +30,25 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        pathSum = 0
-        stack, path = [root], []
-        def __directed_dfs(root, path, stack, pathSum):
+        def __directed_dfs(root, pathSum):
+            if not root:
+                return 0
+
+            pathSum = 10 * pathSum + root.val
+
+            # reach leaf
             if not root.left and not root.right:
-                pathSum += sum(path)
-                print(pathSum, path)
-            while stack:
-                path.append(stack.pop().val)
-                if root.left:
-                    stack.append(root.left)
-                    __directed_dfs(root.left, path, stack, pathSum)
-                if root.right:
-                    stack.append(root.right)
-                    __directed_dfs(root.right, path, stack, pathSum)
-        __directed_dfs(root, path, stack, pathSum)
-        return pathSum
+                return pathSum
+            return __directed_dfs(root.left, pathSum) + __directed_dfs(root.right, pathSum)
+
+        return __directed_dfs(root, 0)
 
 
 if __name__ =='__main__':
     root = TreeNode(1)
     root.left = TreeNode(2)
     root.right = TreeNode(3)
+    root.right.left = TreeNode(4)
     res = Solution().sumNumbers(root)
     print(res)
 
