@@ -20,11 +20,14 @@ class Solution(object):
         :rtype: int
         return the nth ugly number.
         """
-        uglies = [1]
-        def gen(prime):
-            for u in uglies:
-                yield u * prime
-        return list(gen(2))
+        N = {1:1}
+        cnt = [1 for _ in primes]
+        for i in range(2, n + 1):
+            for j in range(len(primes)):
+                while N[cnt[j]] * primes[j] <= N[i - 1]:
+                    cnt[j] += 1
+                N[i] = min([N[cnt[j]] * primes[j] for j in range(len(primes))])
+        return N[n]
 if __name__ == '__main__':
-    res = Solution().nthSuperUglyNumber(12, [2])
+    res = Solution().nthSuperUglyNumber(12, [2, 7, 13, 19])
     print(res)
