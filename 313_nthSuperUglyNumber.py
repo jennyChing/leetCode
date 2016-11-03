@@ -23,10 +23,13 @@ class Solution(object):
         N = {1:1}
         cnt = [1 for _ in primes]
         for i in range(2, n + 1):
+            min_next = float('inf')
             for j in range(len(primes)):
                 while N[cnt[j]] * primes[j] <= N[i - 1]:
                     cnt[j] += 1
-                N[i] = min([N[cnt[j]] * primes[j] for j in range(len(primes))])
+                min_next = min(N[cnt[j]] * primes[j], min_next)
+            N[i] = min_next
+
         return N[n]
 if __name__ == '__main__':
     res = Solution().nthSuperUglyNumber(12, [2, 7, 13, 19])
