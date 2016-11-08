@@ -26,22 +26,31 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
+# Helper function copy from #206 reverse List to reverse the segment of len k from head and connect new tail:
+        def reverseList(head, k):
+            prev = ListNode(0)
+            prev.next = head
+            node = head
+            for _ in range(k): # reversing k nodes
+                temp = head
+                head = head.next
+                temp.next = prev
+                prev = temp
+            node.next = head # head is now on the n position
+            return prev
+
         if m == n:
             return head
-        cnt = 0 # location m and n node
-        curr = dummy = ListNode(0)
-        curr.next = head
-        curr = curr.next
-        while curr:
-            if cnt == m:
-                beforeM = curr
-                afterM = curr.next.next
-            elif cnt == n:
-                beforeN = curr
-                afterN = curr.next.next
-            curr = curr.next
-            cnt += 1
-            #0~beforeM + N + afterM + afterM~beforeN + M + afterN
+        # location m using for loop, not while loop + variable 'count'
+        prev = ListNode(0)
+        prev.next = head
+        res = prev
+        for _ in range(m - 1):
+            prev = prev.next
+
+        prev.next = reverseList(prev.next, n - m + 1)
+        return res.next
+
 if __name__ == "__main__":
     head = ListNode(1)
     head.next = ListNode(2)
@@ -49,3 +58,6 @@ if __name__ == "__main__":
     head.next.next.next = ListNode(4)
     head.next.next.next.next = ListNode(5)
     res = Solution().reverseBetween(head, 2, 4)
+    while res:
+        print(res.val)
+        res = res.next
