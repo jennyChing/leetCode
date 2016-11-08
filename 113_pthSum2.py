@@ -34,14 +34,16 @@ class Solution(object):
         """
         res = []
         def __directed_dfs(root, target_sum, path):
-            if not root.left and not root.right and target_sum == 0:
-                print(path)
+            if root == None: # could be negative!
+                return
+            print(path, target_sum)
+            if not root.left and not root.right and target_sum == root.val:
+            # when reach leaf, append leaf as the last element in the valid path
+                path.append(root.val)
                 res.append(path)
-            path.append(root.val)
-            if root.left:
-                __directed_dfs(root.left, target_sum - root.val, path)
-            if root.right:
-                __directed_dfs(root.right, target_sum - root.val, path)
+            # identify None nodes in the recursive function
+            __directed_dfs(root.left, target_sum - root.val, path + [root.val])
+            __directed_dfs(root.right, target_sum - root.val, path + [root.val])
         __directed_dfs(root, sum, [])
         return res
 
