@@ -18,18 +18,18 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
+        if nums==None or nums==[] or nums[0]==0 and len(nums)>1:
+            return False
         if len(nums) == 1:
             return True
-        def __directed_dfs(level):
-            print(level, len(nums))
-            if level >= len(nums):
+        curr = nums[0]
+        for jump in range(len(nums)):
+            # ask: how to know that every step in nums can be reached?
+            if curr >= len(nums) - 1:
                 return True
-            for l in range(nums[level], 0, -1): # all possible jumping that could be reached
-                print(l)
-                return __directed_dfs(level + l)
-            return False
-
-        return __directed_dfs(1)
+            if jump <= curr:
+                curr = max(curr, jump + nums[jump])
+        return False
 
 if __name__ == "__main__":
     nums = [1, 2]
