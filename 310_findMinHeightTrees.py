@@ -40,15 +40,15 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: List[int]
         """
-        def __directed_dfs(position, parent, dep):
-            visited = {position}
+        def __directed_dfs(position, parent, dep, visited):
             for node in tree[position]:
                 if node != position and node not in visited:
                     # increase the neighbor's depth by 1 (node - 1 will be the position):
                     dep[node - 1] = dep[position] + 1
                     print("depth :", dep)
-                    visited.add(node - 1)
-                    __directed_dfs(node - 1, position + 1, dep)
+                    visited.add(position)
+                    print(visited)
+                    #__directed_dfs(node - 1, position + 1, dep, visited)
 
         tree = [[] for _ in range(n)]
         for e in edges:
@@ -57,9 +57,10 @@ class Solution(object):
         print(tree)
         min_dep = float('inf')
         dep_all = [] * n
+        visited = set()
         for i in range(n):
             dep = [1] * n
-            __directed_dfs(i, i + 1, dep)
+            __directed_dfs(i, i + 1, dep, visited)
             dep_all.append(dep)
             min_dep = min(max(dep), min_dep)
         res = []
