@@ -40,36 +40,32 @@ class Solution(object):
         :type edges: List[List[int]]
         :rtype: List[int]
         """
+# Similar idea from UVA #10459, without index/node off-by-one problem with both zero-based index
+
         def __directed_dfs(position, parent, dep, visited):
             for node in tree[position]:
+                visited.add(position)
                 if node != position and node not in visited:
                     # increase the neighbor's depth by 1 (node - 1 will be the position):
-                    dep[node - 1] = dep[position] + 1
-                    print("depth :", dep)
-                    visited.add(position)
-                    print(visited)
-                    #__directed_dfs(node - 1, position + 1, dep, visited)
+                    dep[node] = dep[position] + 1
+                    __directed_dfs(node, position, dep, visited)
 
         tree = [[] for _ in range(n)]
         for e in edges:
             tree[e[0]].append(e[1])
             tree[e[1]].append(e[0])
-        print(tree)
         min_dep = float('inf')
         dep_all = [] * n
-        visited = set()
-        for i in range(n):
+        for i in range(n): # use i as root for the tree
             dep = [1] * n
-            __directed_dfs(i, i + 1, dep, visited)
+            __directed_dfs(i, i, dep, visited=set()) # start with root: root's parent is root itself
             dep_all.append(dep)
             min_dep = min(max(dep), min_dep)
         res = []
         for r in range(n):
             if max(dep_all[r]) == min_dep:
-                res.append(r + 1)
-        print(res)
-        print(dep_all)
-
+                res.append(r)
+        return res
 
 if __name__ == "__main__":
     edges = [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]
