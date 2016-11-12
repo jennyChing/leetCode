@@ -24,8 +24,9 @@ class Solution(object):
         return h[0][0] # always keep the kth smallest element here
 
 if __name__ == '__main__':
-    matrix = [[1, 5, 9], [10, 11, 13], [12, 13, 15]]
-    k = 8
+    matrix = [[1, 5, 9], [10, 13, 13], [12, 13, 15]]
+    matrix = [[-7, -5, -4, -4, -2, 90], [-1 ,1, 2, 3, 4, 96], [3, 5, 6, 7, 8, 100]]
+    k = 10
     res = Solution().kthSmallest(matrix, k)
     print(res)
 

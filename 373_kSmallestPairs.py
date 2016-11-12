@@ -29,6 +29,8 @@ Return: [1,3],[2,3]
 All possible pairs are returned from the sequence:
 [1,3],[2,3]
 '''
+from heapq import heappush, heappop, heapreplace, heapify
+
 class Solution(object):
     def kSmallestPairs(self, nums1, nums2, k):
         """
@@ -39,29 +41,21 @@ class Solution(object):
         """
         if not nums2 or not nums2:
             return []
-        res = [[nums1[0], nums2[0]]]
-        i, j = 0, 0
-        for _ in range(k - 1):
-            if j + 1 == len(nums2):
-                i += 1
-                for n2 in nums2[:j + 1]:
-                    res.append([nums1[i], n2])
-            elif i + 1 == len(nums1):
-                j += 1
-                for n1 in nums1[:i + 1]:
-                    res.append([n1, nums2[j]])
-            elif nums1[i + 1] < nums2[j + 1]:
-                i += 1
-                for n2 in nums2[:j + 1]:
-                    res.append([nums1[i], n2])
-            else:
-                j += 1
-                for n1 in nums1[:i + 1]:
-                    res.append([n1, nums2[j]])
+        # use a heap to store all pairs' value
+        if len(nums1) == 0 or len(nums2) == 0:
+            return []
+        k = min(k, len(nums1) * len(nums2))
+        for i in range(len(nums1)):
+            for j in range(len(nums2)):
+                heappush(h, (nums1[i] + nums2[j], i, j))
+        res = []
+        for _ in range(k):
+            nextMin, i, j = heappop(h)
+            res.append([nums1[i], nums2[j]])
         return res
 
 if __name__ == "__main__":
     nums1 = [1, 1, 2]
     nums2 = [1, 2, 3]
-    res = Solution().kSmallestPairs(nums1, nums2, 10)
+    res = Solution().kSmallestPairs(nums1, nums2, 9)
     print(res)

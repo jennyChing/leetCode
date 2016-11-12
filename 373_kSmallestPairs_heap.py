@@ -41,6 +41,12 @@ class Solution(object):
 
         """
         if not nums1 or not nums2: return []
+
+	# Use at most the first k of each, then get the sizes.
+        nums1 = nums1[:k]
+        nums2 = nums2[:k]
+        m, n = len(nums1), len(nums2)
+
 # Step1: combine nums1 and nums2 into a matrix with all the combinations (then similiart to #378 - search kth smallest element in matrix!
         matrix = []
         for i in range(len(nums1)):
@@ -48,32 +54,42 @@ class Solution(object):
             for j in range(len(nums2)):
                 row.append(nums1[i] + nums2[j]) # compute the pair sum
             matrix.append(row)
-# Step2: traverse the graph and find the kth smallest element
+
+# Step2: traverse the graph and find the kth smallest element value (kthSum)
     # current smallest, complete list, and the position of the current smallest in the list
-        h = [(row[0], row, 1, ) for row in matrix] # next smallest, row number, col number
+        pairs = {(nums1[0], nums2[0])}
+        h = [(row[0], v, i, 0) for i, v in enumerate(matrix)] # next smallest, row, row number, col number
         # pop elements smaller then the kth element
         for _ in range(k - 1):
+            print(h)
         # v is the current element of the row, r is the current row, i is the current count
-            v, r, i = h[0]
-            # heapreplace: Pop and return the smallest item from the heap, and also push the new item. The heap size doesn’t change.
+            v, r, i, j = h[0]
             if i < len(r): # check elements left in current row
-                heapreplace(h, (r[i], r, i + 1))
+                print("pairSum:", matrix[i][j], i, j)
+                print()
+                heapreplace(h, (r[j], r, i, j + 1))
             elif len(h) > 1: # check enough rows left to pop
                 # run out of elements on the current row, so pop it and move to next row
                 heappop(h)
             else:
                 break
-        cols = [h[i][2] for i in range(len(h))]
-        i_range, j_range = len(matrix) - len(h) + 1, h[0][2]
+        kthSum = h[0][0]
+        print(pairs)
+        print(h)
+
+# Collect all pairs with sum smaller than kthSum as well as k pairs whose sum equals kthSum.
         pairs = []
-        for i in range(i_range):
-            for j in range(j_range):
-                pairs.append([nums1[i], nums2[j]])
+        for a in nums1:
+            for b in nums2:
+                if a + b <= kthSum:
+                    pairs.append([a, b])
         return pairs
 
 
 if __name__ == "__main__":
     nums1 = [1, 1, 2]
     nums2 = [1, 2, 3]
-    res = Solution().kSmallestPairs(nums1, nums2, 2)
+    nums1 = [0,0,0]
+    nums2 = [-3,22,35]
+    res = Solution().kSmallestPairs(nums1, nums2, 9)
     print(res)

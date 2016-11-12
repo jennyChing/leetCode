@@ -41,33 +41,32 @@ class Solution(object):
         :rtype: List[int]
         """
 # Similar idea from UVA #10459, without index/node off-by-one problem with both zero-based index
+# Optimize: only need to call the dfs twice instead of n times to find the tree diameter
 
-        def __directed_dfs(position, dep, visited):
+        def __directed_dfs(position, visited):
+            longest_path = []
             for node in tree[position]:
                 visited.add(position)
                 if node not in visited:
-                    # increase the neighbor's depth by 1 (node - 1 will be the position):
-                    dep[node] = dep[position] + 1
-                    __directed_dfs(node, dep, visited)
+                    path = __directed_dfs(node, visited)
+                    if len(path) > len(longest_path):
+                        longest_path = path
+            longest_path.append(position)
+            return longest_path
 
         tree = [[] for _ in range(n)]
         for e in edges:
             tree[e[0]].append(e[1])
             tree[e[1]].append(e[0])
-        min_dep = float('inf')
-        dep_all = [] * n
-        for i in range(n): # use i as root for the tree
-            dep = [1] * n
-            __directed_dfs(i, dep, visited=set()) # start with root: root's parent is root itself
-            dep_all.append(dep)
-            min_dep = min(max(dep), min_dep)
-        res = []
-        for r in range(n):
-            if max(dep_all[r]) == min_dep:
-                res.append(r)
-        return res
+        path = __directed_dfs(0, set())
+        diameter = __directed_dfs(path[0], set())
+        print(diameter)
+        mid = len(diameter) >> 1
+
+        return [path[mid]] if len(diameter) % 2 else sorted(diameter[mid - 1:mid + 1])
 
 if __name__ == "__main__":
     edges = [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]
-    res = Solution().findMinHeightTrees(6, edges)
+    edges = [[0,1],[0,2]]
+    res = Solution().findMinHeightTrees(3, edges)
     print(res)
