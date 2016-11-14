@@ -46,24 +46,31 @@ class NestedIterator(object):
         Initialize your data structure here.
         :type nestedList: List[NestedInteger]
         """
-        self.stack = nestedList[:]
+        self.stack = [[nestedList, 0]] # record the current nestedList in use and the next free element of it with a stack
 
     def next(self):
         """
         :rtype: int
         """
-        return self.stack.s.pop(0).getInteger()
+        self.hasNext()
+        currList, idx = self.stack[-1]
+        slef.stack[-1][1] += 1
+        return currList[idx].getInteger()
 
     def hasNext(self):
         """
         :rtype: bool
         """
-        while self.stack and not self.stack.pop(0).isInteger():
-        # deal with the nested list:
-            print(self.stack)
-            self.stack = self.stack.pop(0).getList() + self.stack
-        if self.stack and self.stack[0].isInteger():
-            return True
+        while self.stack: # when the currList on top of the stack is a list, read it from the stack and flatten it
+            currList, idx = self.stack[-1]
+            if len(currList) == idx: # no available elements left in the currList
+                self.stack.pop()
+            else:
+                a = currList[idx]
+                if a.isInteger(): # next available element is an integer
+                    return True
+                self.stack[-1][1] += 1 # next available element is a list
+                self.stack.append([a.getList(), 0])
         return False
 
 # Your NestedIterator object will be instantiated and called as such:

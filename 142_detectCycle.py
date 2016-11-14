@@ -14,6 +14,7 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+
         if head == None:
             return
         tort, hare = head, head
@@ -21,11 +22,28 @@ class Solution(object):
             tort = tort.next
             hare = hare.next.next
             if tort == hare:
-                tort = head
+            #Intuitive method:
+                tort = tort.next
+                cycle_len = 1
+                while tort != hare:
+                    tort = tort.next
+                    cycle_len += 1
+                tort = hare = head
+                steps = 0
+                while steps <= cycle_len:
+                    tort = tort.next
+                    steps += 1
                 while tort != head:
                     tort = tort.next
                     hare = hare.next
                 return tort.val
+
+            # textbook method:
+       #         tort = head
+       #         while tort != head:
+       #             tort = tort.next
+       #             hare = hare.next
+       #         return tort.val
         return
 if __name__ == '__main__':
     head = ListNode(3)

@@ -14,27 +14,25 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        final = []
-# use triple for loop to list all combinations
-        for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
-                for m in range(j + 1, len(nums)):
-                    total = nums[i] + nums[j] + nums[m]
-                    final.append(total)
-        spread = abs(max(final))
-
-# initialize res based on target - max(final) to minimize the spread
-        res = min(final) if target - max(final) < 0 else max(final)
-        print(spread, final, res)
-        for k in final:
-            if abs(k - target) <= spread:
-                res = k
-                spread = abs(k - target)
+        nums.sort()
+        spread = float('inf')
+        for k in range(len(nums)):
+            i, j = 0, k - 1
+            while i < j: # use pointer i & j in for loop through k
+                sum3 = nums[i] + nums[j] + nums[k]
+                if sum3 == target:
+                    return target
+                elif abs(sum3 - target) < spread:
+                    res = sum3
+                    spread = abs(sum3 - target)
+                if target - sum3 > 0:
+                    i += 1
+                else:
+                    j -= 1
         return res
-
 
 if __name__ == "__main__":
     t1 = [0, 0, 0]
-    t1 = [-1, 2, 1, 4]
-    res = Solution().threeSumClosest(t1, -100)
+    t1 = [0,2,1,-3]
+    res = Solution().threeSumClosest(t1, 1)
     print(res)

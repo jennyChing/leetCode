@@ -10,6 +10,16 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+class shortSolution(object):
+    def buildTree(self, preorder, inorder):
+        """
+        :type preorder: List[int]
+        :type inorder: List[int]
+        :rtype: TreeNode
+        """
+        root_idx = preorder[0]
+
+
 class Solution(object):
     def buildTree(self, preorder, inorder):
         """
@@ -22,26 +32,25 @@ class Solution(object):
             node_to_index[v] = i
 
         def __directed_build(preorder, p_start, p_end, inorder, i_start, i_end, node_to_index):
+            print(p_start, p_end, i_start, i_end)
             if p_start >= p_end:
                 return
             left_size = node_to_index[preorder[p_start]] - i_start
+            print(left_size)
             root = TreeNode(preorder[p_start])
             root.left = __directed_build(preorder, p_start + 1, p_start + 1 + left_size, inorder, i_start, node_to_index[preorder[p_start]], node_to_index)
-            root.right = __directed_build(preorder, p_start + 1 + left_size, p_end, inorder, node_to_index[preorder[p_start]], i_end, node_to_index)
+            root.right = __directed_build(preorder, p_start + 1 + left_size, p_end, inorder, node_to_index[preorder[p_start]] + 1, i_end, node_to_index)
             return root
         return __directed_build(preorder, 0, len(preorder), inorder, 0, len(inorder), node_to_index)
 
 
 if __name__ == "__main__":
-    t1 = TreeNode(5)
-    t1.left = TreeNode(4)
-    t1.right = TreeNode(8)
-    t1.left.left = TreeNode(11)
-    t1.left.left.left = TreeNode(7)
-    t1.left.left.right = TreeNode(2)
-    t1.right.left = TreeNode(13)
-    t1.right.right = TreeNode(4)
-    t1.right.right.right = TreeNode(1)
-    t1.right.right.left = TreeNode(5)
-    res = Solution().buildTree([2,1], [1,2])
-    print(res)
+    res = Solution().buildTree([1,2], [1,2])
+    while res:
+        print(res.val)
+        if not res.left and not res.right:
+            break
+        if res.left:
+            res = res.left
+        if res.right:
+            res = res.right
