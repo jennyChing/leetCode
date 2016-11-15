@@ -4,6 +4,48 @@ A sequence of numbers is called a wiggle sequence if the differences between suc
 '''
 class Solution(object):
     def wiggleMaxLength(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+	# boundary condition
+        if len(nums) < 2:
+            return len(nums)
+        if len(nums) == 2:
+            return len(nums) if nums[0] != nums[1] else 1
+
+        unique = [nums[0]]
+        for i, v in enumerate(nums):
+            if i > 0 and v != nums[i - 1]:
+                unique.append(nums[i])
+
+        # boundary condition
+        if len(unique) < 2:
+            return len(unique)
+        if len(unique) == 2:
+            return len(unique) if unique[0] != unique[1] else 1
+
+        initUp = False if unique[0] >= unique[1] else True
+        wiggle = []
+        if initUp == False:
+            unique = [float('-inf')] + unique
+            isUp = True
+        else:
+            unique = [float('inf')] + unique
+            isUp = False
+        for i, v in enumerate(unique[1:]):
+            if v > unique[i] and isUp == True:
+                #print("peak", v)
+                wiggle.append(v)
+                isUp = False
+            elif v < unique[i] and isUp == False:
+                #print("valley", v)
+                wiggle.append(v)
+                isUp = True
+        return len(wiggle)
+
+class oldSolution(object):
+    def wiggleMaxLength(self, nums):
         if len(nums) < 2:
             return len(nums)
         if len(nums) == 2:
@@ -31,7 +73,6 @@ class Solution(object):
 if __name__ == '__main__':
     nums = [1,17,5,10,13,15,10,5,16,8]
     nums = [1,7,4,9,2,5]
-    nums = [3,3,3,2,5]
     res = Solution().wiggleMaxLength(nums)
     print(res)
 
