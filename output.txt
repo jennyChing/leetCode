@@ -12,3 +12,9 @@ python3 106_buildTree.py < input
 1
 2
 3
+
+external systems
+continuou parking displays
+RElectlant to use
+holiday block offs
+QR issues
