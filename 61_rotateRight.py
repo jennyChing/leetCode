@@ -20,38 +20,43 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
-        dummy = ListNode(0)
-        dummy.next = head
-        curr = part2_start = head
-        cnt = 0
-        # step one:
-        while curr:
-            curr = curr.next
-            cnt += 1
-            print(cnt)
-        # step two:
-        new_h = head
-        for _ in range(cnt - k):
-            new_h = new_h.next
-        part2_end = new_h
-        new_h = new_h.next
-        if not new_h:
+	if not head:
+            return None
+
+        if head.next == None:
             return head
-        part1_end = new_h
-        print(part1_end.val)
-        for _ in range(k - 1):
-            part1_end = part1_end.next
-        dummy.next = new_h
-        part1_end.next = head
-        part2_end.next = None
-        return new_h
+        if k == 0:
+            return head
+        curr = head
+        lenOfList = 1 # default value
+        # step one:
+        while curr.next:
+            curr = curr.next
+            lenOfList += 1
+        rotateTimes = k % lenOfList
+        if k == 0 or rotateTimes == 0:
+            return head
+
+        # step two:
+        slow, fast = head, head
+        for _ in range(rotateTimes):
+            fast = fast.next
+        while fast.next:
+            slow = slow.next
+            fast = fast.next
+
+        new_head = slow.next
+        slow.next = None
+        fast.next = head
+        head = new_head
+        return head
 
 if __name__ == "__main__":
     head = ListNode(1)
-    #head.next = ListNode(2)
-    #head.next.next = ListNode(3)
-    #head.next.next.next = ListNode(4)
-    #head.next.next.next.next = ListNode(5)
+    head.next = ListNode(2)
+    head.next.next = ListNode(3)
+    head.next.next.next = ListNode(4)
+    head.next.next.next.next = ListNode(5)
     res = Solution().rotateRight(head, 1)
     while res:
         print(res.val)
