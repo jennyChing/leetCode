@@ -20,21 +20,25 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
-        memo = collections.defaultdict(list)
+        memo = collections.defaultdict(int)
         n = len(s)
+        if n < 10:
+            return []
         bits = {'A':0, 'C':1, 'G':2, 'T':3}
         # O(m) first calcualte hashkey int for idx 0 ~ 9 with 4 bits represented mask
         mask = 0
         res = []
-        for i in range(10):
+        for i in range(9):
             mask *= 4
             mask += bits[s[i]]
-        memo[mask] += 1
 
-        for i in range(10, n): # O(n) for loop calculate all hashkeys
-            mask = mask - bits[s[i - 10]] * (4**9)
-            mask = mask * 4 + bits[s[i]]
+        for i in range(9, n): # O(n) for loop calculate all hashkeys
+            # mask = mask - bits[s[i - 10]] * (4**9) # drop old idx
+            mask = mask * 4 + bits[s[i]] # add current idx
+            mask &= 0xfffff # 16 進位填滿來消掉 old index number
             memo[mask] += 1
+            if memo[mask] == 2:
+                res.append(s[i - 9:i + 1])
         return res
 
 
