@@ -44,7 +44,7 @@ class Solution:
         while stack:
             top = stack.pop()
             for n in top.neighbors:
-                if n not in visited:
+                if n.label not in visited:
                     stack.append(n)
                     visited[n.label] = UndirectedGraphNode(n.label)
                 visited[top.label].neighbors.append(visited[n.label])
