@@ -1,5 +1,5 @@
 class Solution(object):
-    def findKthLargest(self, nums, k):
+    def indKthLargest(self, nums, k):
         """
         :type nums: List[int]
         :type k: int
