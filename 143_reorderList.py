@@ -32,20 +32,21 @@ class Solution(object):
             while hare.next and hare.next.next:
                 torte = torte.next
                 hare = hare.next.next
-            rev = reverseList(torte)
+            rev = reverseList(torte.next)
+            torte.next = None
             isEven = True
-            copy = res = ListNode(0)
-            while head != torte.next: # the start of the second part
+            res = ListNode(0)
+            copy = head
+            while copy or rev:
                 if isEven == True:
-                    res.next = ListNode(head.val)
-                    head = head.next
+                    res.next = copy
+                    copy = copy.next
                     isEven = False
                 elif isEven == False:
-                    res.next = ListNode(rev.val)
+                    res.next = rev
                     rev = rev.next
                     isEven = True
                 res = res.next
-            head = copy.next
             return head
 
 
@@ -54,9 +55,9 @@ if __name__ == "__main__":
     head.next = ListNode(2)
     head.next.next = ListNode(3)
     head.next.next.next = ListNode(4)
-    head.next.next.next.next = ListNode(5)
-    head.next.next.next.next.next = ListNode(6)
-    head.next.next.next.next.next.next = ListNode(7)
+    #head.next.next.next.next = ListNode(5)
+    #head.next.next.next.next.next = ListNode(6)
+    #head.next.next.next.next.next.next = ListNode(7)
     res = Solution().reorderList(head)
     while res:
         print(res.val)

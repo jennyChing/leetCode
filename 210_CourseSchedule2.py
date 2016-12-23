@@ -25,30 +25,38 @@ class Solution(object):
         :rtype: List[int]
         """
         def __directed_dfs(i):
-            if visit[i] == 1:
+            print("dfs:", visit[i])
+            if visit[i] == 1: # valid order with no cycles
                 return True
-            if visit[i] == -1:
+            if visit[i] == -1: # contain cycles
                 return False
-            visit[i] = -1
+            visit[i] = -1 # default is not-valid
             for j in graph[i]: # all prerequisites
                 if not __directed_dfs(j): # meet any prerequisites that returns false
                     return False
             visit[i] = 1
             print(i)
             res.append(i)
+            return True
 
         graph = [[] for _ in range(numCourses)]
         for c, p in prerequisites:
             graph[c].append(p)
+        print(graph)
         res = []
         visit = [0 for _ in range(numCourses)]
+        print("visit:", visit)
         for i in range(numCourses):
+            __directed_dfs(i)
             if not __directed_dfs(i):
                 return []
+        print("visit:", visit)
         return res
 
 if __name__ == "__main__":
-    numCourses = 3
-    prerequisites = [[1,0]]
+    numCourses = 4
+    prerequisites = [[1,0],[2,0],[3,1],[3,2]]
+    numCourses = 2
+    prerequisites = [[0,1]]
     res = Solution().findOrder(numCourses, prerequisites)
     print(res)
