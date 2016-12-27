@@ -12,7 +12,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        pos, neg = [nums[0]] + [1] * (len(nums) - 1), [nums[0]] + [1] * (len(nums) - 1)
+        for i in range(1, len(nums)):
+            tup = (nums[i] * pos[i - 1], nums[i] * neg[i - 1], nums[i])
+            pos[i], neg[i] = max(tup), min(tup)
+        return max(pos)
 
 if __name__ == "__main__":
     nums = [2, 3, -2, 4]
     res = Solution().maxProduct(nums)
+    print(res)

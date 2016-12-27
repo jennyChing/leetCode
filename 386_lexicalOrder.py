@@ -47,11 +47,12 @@ class Solution(object):
             # make a & b to the same length of digits:
             while a < top: a *= 10
             while b < top: b *= 10
-            return -1 if a < b else b < a
+            return -1 if a < b else 1
 
         return sorted([i for i in range(1, n + 1)], key=cmp_to_key(custom_compare))
 
 if __name__ == '__main__':
     n = 21
     res = maskSolution().lexicalOrder(n)
+    res = Solution().lexicalOrder(n)
     print(res)
