@@ -17,6 +17,7 @@ values = [2.0, 3.0],
 queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ].
 The input is always valid. You may assume that evaluating the queries will result in no division by zero and there is no contradiction.
 '''
+import collections
 class Solution(object):
     def calcEquation(self, equations, values, queries):
         """
@@ -25,9 +26,28 @@ class Solution(object):
         :type queries: List[List[str]]
         :rtype: List[float]
         """
+# built graph with dict of dict and calculate the values
+        graph = collections.defaultdict(dict)
+        for e, v in zip(equations, values):
+            graph[e[0]][e[1]], graph[e[1]][e[0]] = v, 1.0 / v
+            graph[e[0]][e[0]], graph[e[1]][e[1]] = 1.0, 1.0
+
+        for k in graph: # the middle guy
+            for i in graph: # if i can reach j through k
+                for j in graph: # (i to j) = (i to k) * (k to j)
+                    if k in graph[i] and j in graph[k]:
+                        graph[i][j] = graph[i][k] * graph[k][j]
+        res = []
+        for q in queries: # lookup graph updated with kij algorithm
+            if q[1] not in graph[q[0]]:
+                res.append(-1)
+            else:
+                res.append(graph[q[0]][q[1]])
+        return res
 
 if __name__ == "__main__":
     equations = [ ["a", "b"], ["b", "c"] ]
     values = [2.0, 3.0]
     queries = [ ["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"] ]
     res = Solution().calcEquation(equations, values, queries)
+    print(res)

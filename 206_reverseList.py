@@ -9,20 +9,20 @@ class ListNode(object):
         self.next = None
 
 class Solution(object):
-    def AppendNode(self, head, data):
-       temp = ListNode(data)
-       temp.next = head
-       return temp
     def reverseList(self, head):
         """
         :type head: ListNode
         :rtype: ListNode
         insert nodes into new LinkedList (FILO)
         """
+        def AppendNode(curr, data): # insert a node at the front
+           temp = ListNode(data)
+           temp.next = curr
+           return temp
         curr = ListNode(head.val)
         head = head.next
         while head:
-            curr = Solution().AppendNode(curr, head.val)
+            curr = AppendNode(curr, head.val)
             head = head.next
         return curr
 if __name__ == '__main__':
