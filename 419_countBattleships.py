@@ -25,6 +25,32 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: int
         """
+        cnt = 0
+        n, m = len(board), len(board[0])
+        for i in range(n):
+            for j in range(m):
+                if board[i][j] == 'X':
+                    cnt += 1
+                    tmp_i, tmp_j = i + 1, j + 1
+                    while tmp_j < m and board[i][tmp_j] == 'X':
+                        board[i][tmp_j] = '.'
+                        tmp_j += 1
+                    while tmp_i < n and board[tmp_i][j] == 'X':
+                        board[tmp_i][j] = '.'
+                        tmp_i += 1
+        return cnt
+
+    def countBattleships_refer(self, board): # one pass and no modify
+        cnt = 0
+        n, m = len(board), len(board[0])
+        for i in range(n):
+            for j in range(m):
+                if board[i][j] == 'X' and (i == 0 or board[i - 1][j] == '.') and (j == 0 or board[i][j - 1] == '.'): # check not duplicate count
+                    cnt += 1
+        return cnt
 
 if __name__ == "__main__":
-    res = Solution().countBattleships(3)
+    board = [["X", "X",".", "X"],[".", ".", ".", "X"],[".", ".", ".", "X"]]
+    board = [["X", "X", "X"] ]
+    res = Solution().countBattleships_refer(board)
+    print(res)
