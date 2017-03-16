@@ -82,7 +82,7 @@ class Solution(object):
             s = a + b + carry
             __insert_node(s % 10)
             carry = s // 10
-        if carry == 1:
+        if carry:
             __insert_node(1)
         return dummy.next
 

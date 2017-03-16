@@ -23,23 +23,28 @@ class Solution(object):
         """
         nums.sort()
         res = []
-        for k in range(len(nums)):
-            for l in range(k + 1, len(nums)):
-                i, j = 0, k - 1
-                while i < j:
+        for i in range(len(nums)):
+            print(nums[i])
+            if i > 0 and nums[1] == nums[i - 1]: # to avoid duplicate
+                continue
+            for j in range(i + 1, len(nums)):
+                if j > i + 1 and nums[j] == nums[j - 1]:
+                    continue # second check
+                k, l = j + 1, len(nums) - 1 # need move range to after l
+                while k < l:
                     if nums[i] + nums[j] + nums[k] + nums[l] == target:
                         res.append((nums[i], nums[j], nums[k], nums[l]))
-                        while i < j and nums[i] == res[-1][0]:
-                            i += 1
-                        while i < j and nums[j] == res[-1][1]:
-                            j -= 1
+                        l -= 1
+                        while k < l and nums[k] == nums[k - 1]: # repeated
+                            k += 1 # skip
+                        while k < l and nums[l] == nums[l + 1]: # repeated
+                            l -= 1 # skip
                     elif nums[i] + nums[j] + nums[k] + nums[l] < target:
-                        i += 1
+                        k += 1
                     else:
-                        j -= 1
+                        l -= 1
         print(res)
         return [list(r) for r in set(res)]
-
 
 if __name__ == "__main__":
     nums = [1, 0, 0, -1, 0, -2, 2]

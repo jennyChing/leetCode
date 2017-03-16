@@ -30,19 +30,18 @@ class Solution(object):
         res = []
         # sort it to better check the duplication
         nums = sorted(nums)
-        def __directed_dfs(res, level, path):
+        def __directed_dfs(level, path):
             # complete a path whenever recursive is called
             res.append(path)
-
             # start for loop from new level
             for i in range(level, len(nums)):
-                print(level, i, nums[level])
             # [Special case to handle:] if the next one is a duplicated value and previous wan't selected: cannot select it! (must skip case)
                 if i > level and nums[i] == nums[i - 1]: # i > level: skipped
+                    print(level, i, nums[i], nums[i - 1])
                     continue # need to skip this duplicate value as well
-                __directed_dfs(res, i + 1, path + [nums[i]]) # new level is (i + 1) not (level + 1)!
+                __directed_dfs(i + 1, path + [nums[i]]) # new level is (i + 1) not (level + 1)!
 
-        __directed_dfs(res, 0, [])
+        __directed_dfs(0, [])
         return res
 if __name__ == '__main__':
     nums = [1, 2, 2]

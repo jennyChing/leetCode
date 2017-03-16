@@ -38,6 +38,32 @@ class Solution(object):
                 cow += 1
                 dict_secret[arr_g[i]] -= 1
         return '%dA%dB' % (bull, cow)
+
+import collections
+class Solution(object):
+    def getHint(self, secret, guess):
+        """
+        :type secret: str
+        :type guess: str
+        :rtype: str
+        """
+        bull = cow = 0
+        i = 0
+        # first find bulls and remove them from secret and guess
+        while i < len(guess):
+            if guess[i] == secret[i]:
+                bull += 1
+                guess = guess[:i] + guess[i + 1:] if i + 1 < len(guess) else guess[:i]
+                secret = secret[:i] + secret[i + 1:] if i + 1 < len(secret) else secret[:i]
+            else:
+                i += 1
+        # then find cows in the left secret and guess
+        cnt_g, cnt_s = collections.Counter(guess), collections.Counter(secret)
+        for k, v in cnt_g.items():
+            if k in cnt_s:
+                cow += min(v, cnt_s[k])
+        return str(bull) + 'A' + str(cow) + 'B'
+
 if __name__ == '__main__':
     res = Solution().getHint("1807", "7810")
     assert res == "1A3B"

@@ -25,9 +25,9 @@ class Solution(object):
             res[i][j] = v
             # Decide which direction it is going next: (1) out of boundary or (2) reach visited entry
             print(v, i, j, res)
-            if i + direction[d_indx][0]l >= n or j + direction[d_indx][1] >= n or res[i + direction[d_indx][0]][j + direction[d_indx][1]] != 0 :
+            if i + direction[d_indx][0] >= n or j + direction[d_indx][1] >= n or res[i + direction[d_indx][0]][j + direction[d_indx][1]] != 0 :
                 d_indx = (d_indx + 1) % 4
-            print("Going next :", direction[d_indx])
+            print(v, "Going next :", direction[d_indx])
             i += direction[d_indx][0]
             j += direction[d_indx][1]
         return res

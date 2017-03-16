@@ -18,7 +18,7 @@ class Solution(object):
             if a - b > 1:
                 nums.remove(n)
         print(nums)
-        return len(nums)
+        return nums
 if __name__ == '__main__':
     nums = [1, 2, 2, 2]
     res = Solution().removeDuplicates(nums)

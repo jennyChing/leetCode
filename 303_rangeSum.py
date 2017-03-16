@@ -4,7 +4,13 @@ class NumArray(object):
         initialize your data structure here.
         :type nums: List[int]
         """
-        self.__data = nums
+	self.nums = nums
+        self.prefixSum = []
+        for i in range(len(nums)):
+            if i == 0:
+                self.prefixSum.append(nums[0])
+            else:
+                self.prefixSum.append(nums[i] + self.prefixSum[-1])
 
     def sumRange(self, i, j):
         """
@@ -13,9 +19,7 @@ class NumArray(object):
         :type j: int
         :rtype: int
         """
-        n = len(self.__data)
-        return sum(self.__data[i: min(j + 1, n)])
-
+        return self.prefixSum[j] - self.prefixSum[i - 1] if i > 0 else self.prefixSum[j]
 
 # Your NumArray object will be instantiated and called as such:
 if __name__ == '__main__':

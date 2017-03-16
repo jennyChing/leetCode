@@ -14,9 +14,9 @@ class Solution(object):
         keep a list of frontier nodes in a stack, and a traversed tree
         use DFS to check each path in a tree: return when both left and right child are leaves
         """
-        if root == None:
+        if not root:
             return False
-        elif root.right == None and root.left == None: # when both child is leaves
+        if not root.right and not root.left: # when both child is leaves
             return sum == root.val
         return self.hasPathSum(root.right, sum - root.val) or self.hasPathSum(root.left, sum - root.val) # minus the current root value from sum and move to the child nodes
 

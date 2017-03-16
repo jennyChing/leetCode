@@ -26,6 +26,23 @@ class Solution(object):
                 return True
             print(potential)
         return False
+
+'''
+refer better solution:
+(1) Find the first smallest number in the 3 subsequence
+(2) Find the second one greater than the first element, reset the first one if it's smaller
+'''
+    def increasingTriplet(nums):
+	first = second = float('inf')
+	for n in nums:
+            if n <= first:
+		first = n
+	    elif n <= second:
+		second = n
+	    else:
+		return True
+	return False
+
 if __name__ == '__main__':
     nums = [2,1,5,0,3]
     res = Solution().increasingTriplet(nums)

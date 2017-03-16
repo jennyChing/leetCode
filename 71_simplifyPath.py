@@ -22,7 +22,7 @@ class Solution(object):
         stack = []
         for p in paths:
             if p == '..':
-                if len(stack) != 0:
+                if stack:
                     stack.pop()
             elif p in ' .':
                 continue

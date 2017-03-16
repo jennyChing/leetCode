@@ -11,38 +11,15 @@ class Solution(object):
         :rtype: str
         add three ppl: a, b, and carry (either 0 or 1)
         """
-        res = ""
-        i, carry = 0, 0
-        a = a[::-1]
-        b = b[::-1]
-        for i in range(max(len(a), len(b))):
-            if i < min(len(a), len(b)):
-                if int(a[i]) + int(b[i]) + carry > 1:
-                    res += str((int(a[i]) + int(b[i]) + carry - 2))
-                    carry = 1
-                else:
-                    res += str((int(a[i]) + int(b[i]) + carry))
-                    carry = 0
-                print("both: ", res)
-            elif i >= len(a):
-                if int(b[i]) + carry > 1:
-                    res += str((int(b[i]) + carry - 2))
-                    carry = 1
-                else:
-                    res += str((int(b[i]) + carry))
-                    carry = 0
-                print("b :", res)
-            elif i >= len(b):
-                if int(a[i]) + carry > 1:
-                    res += str((int(a[i]) + carry - 2))
-                    carry = 1
-                else:
-                    res += str((int(a[i]) + carry))
-                    carry = 0
-                print("a :", res)
-        print(len(" "))
-        if carry:
-            res += str(carry)
+	if len(a) < len(b):
+            return self.addBinary(b, a)
+        b = b.zfill(len(a))
+        carry, res = 0, ""
+        for i in range(len(a) - 1, -1, -1):
+            d = ord(a[i]) + ord(b[i]) - 2 * 48 + carry
+            carry = 1 if d > 1 else 0
+            res += str(d % 2)
+        res += '1' if carry else ''
         return res[::-1]
 if __name__ == '__main__':
     res = Solution().addBinary("1", "111")

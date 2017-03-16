@@ -12,7 +12,7 @@ class Solution(object):
             return True
         right, left = num // 2 + 1, 1
         while right > left + 1:
-            mid = (right - left) // 2 + left
+            mid = (right + left) // 2
             if mid * mid == num:
                 return True
             elif mid * mid < num:

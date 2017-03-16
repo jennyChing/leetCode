@@ -31,17 +31,16 @@ class Solution(object):
         for i, v in enumerate(inorder):
             node_to_index[v] = i
 
-        def __directed_build(preorder, p_start, p_end, inorder, i_start, i_end, node_to_index):
-            print(p_start, p_end, i_start, i_end)
+        def __directed_build(p_start, p_end, i_start, i_end):
             if p_start >= p_end:
                 return
             left_size = node_to_index[preorder[p_start]] - i_start
             print(left_size)
             root = TreeNode(preorder[p_start])
-            root.left = __directed_build(preorder, p_start + 1, p_start + 1 + left_size, inorder, i_start, node_to_index[preorder[p_start]], node_to_index)
-            root.right = __directed_build(preorder, p_start + 1 + left_size, p_end, inorder, node_to_index[preorder[p_start]] + 1, i_end, node_to_index)
+            root.left = __directed_build(p_start + 1, p_start + 1 + left_size, i_start, node_to_index[preorder[p_start]])
+            root.right = __directed_build(p_start + 1 + left_size, p_end, node_to_index[preorder[p_start]] + 1, i_end)
             return root
-        return __directed_build(preorder, 0, len(preorder), inorder, 0, len(inorder), node_to_index)
+        return __directed_build(0, len(preorder), 0, len(inorder))
 
 
 if __name__ == "__main__":

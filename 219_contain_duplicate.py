@@ -26,6 +26,22 @@ class Solution(object):
             print(i, k, dict_nums)
         return False
 
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+	# O(n * k) TL => idea: moving window record i ~ k elements in memo to reduce time to O(n + k)
+        memo = set()
+        for i, n in enumerate(nums):
+            if i - k > 0:
+                memo.remove(nums[i - k - 1]) # first remove
+            if n in memo:
+                return True
+            memo.add(n) # then add
+        return False
+
 if __name__ == '__main__':
     nums = [-2, 0, 1, 2, -1, 4]
     k = 5

@@ -33,11 +33,8 @@ class Solution(object):
                     i += 1
                 else:
                     j -= 1
-        pairs = list(pairs)
-        res = []
-        for p in pairs:
-            res.append(list(p))
-        return res
+        pairs = [list(p) for p in pairs]
+        return pairs
 
 if __name__ == "__main__":
     s = [-1, 0, 1, 2, -1, -4]

@@ -16,7 +16,7 @@ class Solution(object):
         """
         nums.sort()
         spread = float('inf')
-        for k in range(len(nums)):
+        for k in range(1, len(nums)):
             i, j = 0, k - 1
             while i < j: # use pointer i & j in for loop through k
                 sum3 = nums[i] + nums[j] + nums[k]

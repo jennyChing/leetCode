@@ -16,8 +16,7 @@ class Solution(object):
         :rtype: List[str]
         """
 # find all valid IP: 4 columns each contain a value 1~255
-        res = []
-        def __directed_dfs(res, k, path, s):
+        def __directed_dfs(k, path, s):
             if len(s) > k * 3: # max is 3 位數
                 return
             if k == 0:
@@ -26,8 +25,10 @@ class Solution(object):
                 for i in range(min(3, len(s) - k + 1)):
                     if i == 2 and int(s[:3]) > 255 or i > 0 and s[0] == '0':
                         continue # invalid IP
-                    __directed_dfs(res, k - 1, path + [s[:i + 1]], s[i + 1:]) # s[:i + 1] is used
-        __directed_dfs(res, 4, [], s)
+                    __directed_dfs(k - 1, path + [s[:i + 1]], s[i + 1:]) # s[:i + 1] is used
+        res = []
+        __directed_dfs(4, [], s)
+        print(res)
         return ['.'.join(r) for r in res]
 
 if __name__ == "__main__":

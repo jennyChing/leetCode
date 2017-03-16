@@ -24,7 +24,6 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: void Do not return anything, modify board in-place instead.
         """
-        n, m = len(board), len(board[0])
         def __check_around(i, j):
             q = collections.deque([(i, j)])
             while q:
@@ -36,6 +35,7 @@ class Solution(object):
                     q.append([i, j - 1])
                     q.append([i, j + 1])
 
+        n, m = len(board), len(board[0])
         # Step1: start from all O groups that are on side and mark them as @
         for i in range(n):
             j = 0

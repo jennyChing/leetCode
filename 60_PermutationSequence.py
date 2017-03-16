@@ -28,6 +28,7 @@ class Solution(object):
         nums = [i for i in range(1, n + 1)]
         while len(nums) > 1:
             idx = (k - 1) // math.factorial(len(nums) - 1)
+            print(idx, nums[idx], k)
             num = nums[idx]
             res += str(num)
             nums.remove(num)

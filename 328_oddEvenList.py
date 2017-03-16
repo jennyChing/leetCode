@@ -40,6 +40,34 @@ class Solution(object):
             curr = curr.next
             currSteps += 1
         return copy
+
+# second attempt
+class Solution(object):
+    def oddEvenList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # idea: keep pointer at odd, walk every 2 + n nodes as curr => Skip curr and append it after odd
+        if not head or not head.next or not head.next.next:
+            return head
+        odd, pre, curr = head, head.next, head.next.next
+        while curr:
+            insert = ListNode(curr.val)
+            insert.next = odd.next # insert odd node value
+            odd.next = insert
+            if curr.next and curr.next.next:
+                walk_to_next_odd = curr.next.next # walk 2 nodes to next odd node
+            else:
+                pre.next = curr.next # skip curr
+                break
+            pre.next = curr.next # skip curr
+            curr = walk_to_next_odd # update curr to next odd node
+            odd = odd.next
+            pre = pre.next
+        return head
+
+
 if __name__ == '__main__':
     head = ListNode(1)
     head.next = ListNode(2)

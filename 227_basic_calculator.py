@@ -43,8 +43,8 @@ class Solution(object):
                 num = 0
         return sum(stack)
 
-
 if __name__ == "__main__":
     s = "3+2*2 + 1*3*44"
+    s = "0*0"
     res = Solution().calculate(s)
     print(res)

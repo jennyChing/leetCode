@@ -17,10 +17,7 @@ class Solution(object):
         :type inorder: List[int]
         :rtype: TreeNode
         """
-        node_to_index = {}
-        for i, v in enumerate(inorder):
-            node_to_index[v] = i
-        def __directed_build(postorder, p_start, p_end, inorder, i_start, i_end, node_to_index):
+        def __directed_build(p_start, p_end, i_start, i_end):
             if p_start >= p_end:
                 return
             root = TreeNode(postorder[p_end - 1])
@@ -29,10 +26,14 @@ class Solution(object):
         # Calculate size of nodes for each side:
             left_size = root_idx - i_start
 
-            root.left = __directed_build(postorder, p_start, p_start + left_size, inorder, i_start, root_idx, node_to_index)
-            root.right = __directed_build(postorder, p_start + left_size, p_end - 1, inorder, root_idx + 1, i_end, node_to_index)
+            root.left = __directed_build(p_start, p_start + left_size, i_start, root_idx)
+            root.right = __directed_build(p_start + left_size, p_end - 1, root_idx + 1, i_end)
             return root
-        return __directed_build(postorder, 0, len(postorder), inorder, 0, len(inorder), node_to_index)
+
+        node_to_index = {}
+        for i, v in enumerate(inorder):
+            node_to_index[v] = i
+        return __directed_build(0, len(postorder), 0, len(inorder))
 
 
 if __name__ == "__main__":

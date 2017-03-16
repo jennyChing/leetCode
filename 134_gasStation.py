@@ -24,7 +24,7 @@ class Solution(object):
         start, remain = 0, 0
         for i in range(len(gas)):
             remain += gas[i] - cost[i]
-            print(remain, start)
+            print(gas[i] - cost[i], remain, start)
             if remain < 0:
                 remain = 0 # KEY: travel to the first one don't need gas, remain back to 0
                 start = i + 1 # update start here (ask: how to ensure it is valid curcit?)

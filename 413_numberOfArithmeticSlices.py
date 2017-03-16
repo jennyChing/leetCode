@@ -27,6 +27,7 @@ A = [1, 2, 3, 4]
 return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
 '''
 class Solution(object):
+# attempt1
     def numberOfArithmeticSlices(self, A):
         """
         :type A: List[int]
@@ -45,6 +46,17 @@ class Solution(object):
                 cnt = 2
                 if i + 1 < len(A):
                     diff = A[i] - A[i - 1]
+        return sum(dp)
+
+# attempt2
+    def numberOfArithmeticSlices(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+	for i in range(len(A[2:])):
+            if A[i + 2] - A[i + 1] == A[i + 1] - A[i]: # main check
+                dp[i] = dp[i - 1] + 1
         return sum(dp)
 
 if __name__ == "__main__":

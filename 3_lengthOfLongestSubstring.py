@@ -19,13 +19,13 @@ class Solution(object):
         """
         i = res = 0
         memo = {}
-        for j in range(len(s)):
-            if s[j] in memo and i <= memo[s[j]]: # when starting index equals need to update too
+        for j, c in enumerate(s):
+            if c in memo and i <= memo[c]: # when starting index equals need to update too
                 print(memo, i, memo[s[j]], j)
-                i = memo[s[j]] + 1 # update the starting pointer
+                i = memo[c] + 1 # update the starting pointer
             else:
                 res = max(res, j - i + 1) # otherwise just check the max length currently
-            memo[s[j]] = j # will cover the old char so no need to handle it when repeated
+            memo[c] = j # will cover the old char so no need to handle it when repeated
         # last one
         return res
 

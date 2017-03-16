@@ -25,6 +25,27 @@ class Solution(object):
             unique.add(head.val)
             head = head.next
         return copy.next
+
+
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # key: deal with the last node if duplicated using pre jump to next
+        memo = set()
+        copy = head
+        pre = ListNode(0)
+        pre.next = head
+        while head:
+            if head.val in memo:
+                pre.next = head.next # pre jump to next node, pre stays same
+            else: # the head.val is unique
+                memo.add(head.val)
+                pre = pre.next
+            head = head.next # move head forward
+        return copy
+
 if __name__ == '__main__':
     head = ListNode(1)
     head.next = ListNode(1)

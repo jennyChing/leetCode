@@ -51,7 +51,7 @@ class Solution(object):
             rob_next = DFS(root.left) + DFS(root.right)
             print(rob_next)
             # important step: record the node money value into the dictionary "memo"
-            self.memo[root] = max(self.memo[root], max(rob_this, rob_next))
+            self.memo[root] = max(rob_this, rob_next)
             return self.memo[root]
         return DFS(root)
 if __name__ == '__main__':

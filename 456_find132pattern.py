@@ -42,7 +42,7 @@ class Solution(object):
                         right = max(right, n)
                 while stack and right <= stack[-1]:
                     stack.pop()
-                if stack and stack[-1] < right:
+                if stack and stack[-1] < right: # pop till stack[-1] < right
                     return True
             stack.append(nums[i]) # not peak, add to stack
         return False

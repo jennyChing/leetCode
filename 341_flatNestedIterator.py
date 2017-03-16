@@ -54,7 +54,7 @@ class NestedIterator(object):
         """
         self.hasNext()
         currList, idx = self.stack[-1]
-        slef.stack[-1][1] += 1
+        self.stack[-1][1] += 1
         return currList[idx].getInteger()
 
     def hasNext(self):

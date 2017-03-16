@@ -21,9 +21,7 @@ class Solution(object):
         """
         res = [0]
         for i in range(n):
-            print("outter loop res: ", i, res)
             for n in reversed(res):
-                print("res: ", res, n, " + ", 2 ** i)
                 res.append(n + 2 ** i)
         return res
 

@@ -11,10 +11,10 @@ class Solution(object):
         i = 1
         for j in range(len(nums)):
             if nums[i-1] != nums[j]:
-                print(nums[i-1], nums[j], i, j, nums)
                 nums[i], nums[j] = nums[j], nums[i]
                 i += 1
+            print(nums[i-1], nums[j], i, j, nums)
         return len(nums[:i])
 if __name__ == '__main__':
-    nums = [1, 1, 2, 3, 4, 4, 5]
+    nums = [1, 1, 1, 2, 3, 4, 4, 5]
     print(Solution().removeDuplicates(nums))

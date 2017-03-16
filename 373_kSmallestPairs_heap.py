@@ -57,26 +57,21 @@ class Solution(object):
 
 # Step2: traverse the graph and find the kth smallest element value (kthSum)
     # current smallest, complete list, and the position of the current smallest in the list
-        pairs = {(nums1[0], nums2[0])}
-        h = [(row[0], v, i, 0) for i, v in enumerate(matrix)] # next smallest, row, row number, col number
+        h = [(v[0], v, i, 0) for i, v in enumerate(matrix)] # next smallest, row, row number, col number
+        print(h)
         # pop elements smaller then the kth element
-        for _ in range(k - 1):
-            print(h)
-        # v is the current element of the row, r is the current row, i is the current count
+        for _ in range(k - 1): # v is the current element of the row, r is the current row, i is the current count
             v, r, i, j = h[0]
-            if i < len(r): # check elements left in current row
-                print("pairSum:", matrix[i][j], i, j)
-                print()
+            if j < len(r): # check elements left in current row
                 heapreplace(h, (r[j], r, i, j + 1))
             elif len(h) > 1: # check enough rows left to pop
                 # run out of elements on the current row, so pop it and move to next row
                 heappop(h)
             else:
                 break
+            print(h)
         kthSum = h[0][0]
-        print(pairs)
-        print(h)
-
+        print(kthSum)
 # Collect all pairs with sum smaller than kthSum as well as k pairs whose sum equals kthSum.
         pairs = []
         for a in nums1:
@@ -87,9 +82,9 @@ class Solution(object):
 
 
 if __name__ == "__main__":
-    nums1 = [1, 1, 2]
-    nums2 = [1, 2, 3]
     nums1 = [0,0,0]
     nums2 = [-3,22,35]
-    res = Solution().kSmallestPairs(nums1, nums2, 9)
+    nums1 = [1, 1, 2]
+    nums2 = [1, 2, 3]
+    res = Solution().kSmallestPairs(nums1, nums2, 10)
     print(res)

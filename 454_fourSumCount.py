@@ -45,6 +45,10 @@ class Solution(object):
                     res += memo[-(c + d)]
         return res
 
+    def fourSumCount_revise(self, A, B, C, D):
+        cnt = collections.Count([a + b for a in A for b in B])
+        return sum(memo[-(c + d)] for c in C for d in D)
+
 
 if __name__ == "__main__":
     A = [ 1, 2]

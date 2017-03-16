@@ -37,6 +37,28 @@ class Solution(object):
             cnt += 1
         return cnt
 
+import collections
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        res = 0
+        cnt = collections.Counter(s)
+        for k, v in cnt.items():
+            if not v % 2:
+                res += v
+            elif (v - 1) > 0:
+                res += v - 1
+        if len(s) != res:
+            res += 1
+        return res
+
+    def refer(self, s):
+	odds = sum(v & 1 for v in collections.Counter(s).values())
+    	return len(s) - odds + bool(odds)
+
 
 if __name__ == "__main__":
     s = "abccccdd"

@@ -31,6 +31,7 @@ class Solution(object):
         tail, seen = '', {}
         isCycle = False
         while remainder != 0:
+            print(remainder, seen, tail)
             if remainder in seen:
                 tail = tail[:seen[remainder]] + '(' + tail[seen[remainder]:] + ')'
                 isCycle = True
@@ -44,5 +45,5 @@ class Solution(object):
         return sign + str(head) + '.' +  tail if len(tail) != 0 else sign + str(head)
 
 if __name__ == "__main__":
-    res = Solution().fractionToDecimal(1, 6)
+    res = Solution().fractionToDecimal(4, 333)
     print(res)

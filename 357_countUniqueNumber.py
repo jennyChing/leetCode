@@ -33,12 +33,11 @@ class Solution(object):
         #    print("update prod :", last, cache, prod, index)
         #return (10 * prod + cache) if n > 0 else 1
 # attempt 2
-        #if n > 0:
-        #    uni = 9
+        #uni = res = 1
         #for i in range(n):
-        #    print(uni, i)
-        #    uni *= (9 - i)
-        #return uni
+        #    uni *= 9 if i == 0 else (10 - i)
+        #    res += uni
+        #return res
 # attempt 1
         #digits = 1
         #if n > 10:

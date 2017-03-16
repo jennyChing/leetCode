@@ -30,6 +30,32 @@ class Solution(object):
             ans = new_ans
         return ans
 
+# idea: dfs backtricking solution
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+# idea: memo keep the visited index; cache keep the used value to avoid repeat
+        def dfs(partial, memo):
+            print(partial, memo)
+            if len(partial) == len(nums):
+                res.append(partial) # main checking condition
+                return
+            # if not valid partial
+            cache = set()
+            for i in range(len(nums)):
+                if i in memo or nums[i] in cache:
+                    continue
+                memo.add(i)
+                cache.add(nums[i])
+                dfs(partial + [nums[i]], memo) # generate new dfs
+                memo.remove(i)
+
+        res = []
+        dfs([], set())
+        return res
+
 # [Compare with #90]
 # [Idea:] if you skip this one, if next one is duplicate one, you cannot choose it. So sort it and while recursing check if the current one is same as the last one, then skip it
         #nums = sorted(nums) # sort it to better check the duplication
@@ -50,19 +76,6 @@ class Solution(object):
 
         #__directed_dfs(res, 0, [])
         #return res
-
-# [Compare with #46]
-# cannot use generator as in 46 solution (better performance due to functional programming)
-        #def permutations(nums):
-        #    if not nums:
-        #        yield []
-        #    for n in nums:
-        #        for p in permutations([i for i in nums if i != n]):
-        #            yield [n] + p
-        #            print(n, p, [n] + p)
-
-        #return [p for p in permutations(nums)]
-
 
 if __name__ == "__main__":
     nums = [1, 1, 2]

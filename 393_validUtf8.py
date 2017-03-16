@@ -47,17 +47,35 @@ class Solution(object):
                 i += 1
                 continue
 
-            chars = 0 # possible length: 2 ~ 4
+            chars = 0 # possible length: 2 ~ 4 (1 ~ 3 characters)
             for b in bin(data[i])[2:].zfill(8): # character is 2~4 byte long
                 if b == "1":
                     chars += 1
                 else:
                     break
-            if chars == 1 or i + chars > len(data): return False
+            if chars == 1 or chars > 4 or i + chars > len(data): return False
             for j in range(1, chars): # check next 2~4 bytes
                 if bin(data[i + j])[2:].zfill(8)[:2] != "10":
                     return False
             i += chars
+        return True
+
+# refer
+def check(nums, start, size):
+    for i in range(start + 1, start + size + 1):
+        if i >= len(nums) or (nums[i] >> 6) != 0b10: return False
+    return True
+
+class Solution(object):
+    def validUtf8(self, nums, start=0):
+        while start < len(nums):
+            first = nums[start]
+            print(first >> 3, start)
+            if   (first >> 3) == 0b11110 and check(nums, start, 3): start += 4
+            elif (first >> 4) == 0b1110  and check(nums, start, 2): start += 3
+            elif (first >> 5) == 0b110   and check(nums, start, 1): start += 2
+            elif (first >> 7) == 0:                                 start += 1
+            else:                                                   return False
         return True
 
 
@@ -66,5 +84,6 @@ if __name__ == "__main__":
     data = [240,162,138,147,17]
     data = [39,89,227,83,132,95,10,0]
     data = [197, 130, 1]
+    data = [250,145,145,145,145]
     res = Solution().validUtf8(data)
     print(res)

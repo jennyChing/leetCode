@@ -31,13 +31,13 @@ class Solution(object):
 # keep a copy that records the part that should be pass to the left recursive
         copy.next = head
 
-        # be sure to check both fast and fast.next
+        # find mid at pointer slow: be sure to check both fast and fast.next
         while fast and fast.next:
             copy = copy.next
             slow = slow.next
             fast = fast.next.next
 
-# keep the copy with value from dummy.next to the one before slow (left part of the linkedList
+# keep a copy of value from dummy.next to the one before slow (left part of the linkedList
         copy.next = None
         root = TreeNode(slow.val)
         root.left, root.right = self.sortedListToBST(dummy.next), self.sortedListToBST(slow.next)

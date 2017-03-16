@@ -31,6 +31,21 @@ class Solution(object):
                 h = i + 1
         return h
 
+# second attempt (without reverse, using len - i)
+class Solution(object):
+    def hIndex(self, citations):
+        """
+        :type citations: List[int]
+        :rtype: int
+        """
+        # idea: first sort the citations and increment h for i in citations: if len - i <= citations[i] and (i == 0 or citations[i - 1] <= len - i), h = len - i (need to check both sides!)
+        citations = sorted(citations)
+        n = len(citations)
+        h = 0
+        for i in range(n):
+            if n - i <= citations[i] and (i == 0 or citations[i - 1] <= n - i): # n - i = i + 1
+                h = n - i
+        return h
 
 if __name__ == '__main__':
     citations = [100]

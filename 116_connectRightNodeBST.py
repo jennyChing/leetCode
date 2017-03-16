@@ -40,15 +40,15 @@ class Solution:
                     curr = curr.next
                 # go down 1 level
                 curr = level_start.pop().left
+
 if __name__ == "__main__":
     t1 = TreeLinkNode(1)
-    t1.left = TreeLinkNode(2)
     t1.right = TreeLinkNode(3)
     t1.left.left = TreeLinkNode(4)
     t1.left.right = TreeLinkNode(5)
     t1.right.left = TreeLinkNode(6)
     t1.right.right = TreeLinkNode(7)
-    Solution().connect(t1)
+    Solution().connect_linkedList(t1)
     print(t1.right.left.next.val)
 
 

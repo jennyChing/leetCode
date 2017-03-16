@@ -36,7 +36,7 @@ class Solution(object):
                 l = mid + 1
             else:
                 r = mid - 1
-        return [l, r] if hasTarget == True else [-1, -1]
+        return [l, r] if hasTarget else [-1, -1]
 
 if __name__ == "__main__":
     t1 = [5, 7, 7, 8, 8, 10]

@@ -36,8 +36,34 @@ class Solution(object):
         #    while cnt < n:
         #        while _ in k:
         #            yield cnt
+
+    def combine_dfs(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        # idea: dfs backtricking solution (too slow...)
+        def dfs(partial):
+            print(len(partial))
+            if len(partial) == k:
+                res.append(partial) # main checking condition
+                return
+            if len(partial) > k:
+                return
+            # if not valid partial
+            for n in nums:
+                if n in partial or (partial and n > partial[-1]):
+                    continue # already in the partial list
+                dfs(partial + [n]) # generate new dfs
+
+        res = []
+        nums = [i for i in range(1, n + 1)]
+        dfs([])
+        return res
+
 if __name__ == "__main__":
-    res = Solution().combine(4, 2)
+    res = Solution().combine_dfs(4, 2)
     print(res)
 
 

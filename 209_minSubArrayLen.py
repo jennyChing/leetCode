@@ -23,6 +23,24 @@ class Solution(object):
                 i += 1
         return res if res < float('inf') else 0
 
+# second attempt
+class Solution(object):
+    def minSubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        # idea: 2 pointers i and j -> inside for loop j, while i <= j and sum(nums[i:j]) > s: i++, stop moving i forward when no longer > s (len = j - i + 1, for loop j and return the min_len)
+        i, j , min_len, cur_sum = 0, 0, sys.maxint, 0
+        while j < len(nums): # j++ when cur_sum < s
+            cur_sum += nums[j]
+            while i <= j and cur_sum >= s: # start moving i till cur_sum >= s! (stop when cur_sum < s)
+                min_len = min(min_len, j - i + 1)
+                cur_sum -= nums[i] # i is moved forward so the first element at old i is out of range
+                i += 1 # shorten subarray by moving i forward
+            j += 1
+        return min_len if min_len != sys.maxint else 0
 
 if __name__ == "__main__":
     nums = [2,3,1,2,4,3]

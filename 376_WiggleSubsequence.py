@@ -70,6 +70,28 @@ class oldSolution(object):
             else:
                 temp[-1] = n
         return len(temp) - 1
+
+# second time
+class Solution(object):
+    def wiggleMaxLength(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # idea: check the first 2 elements to see if n[0] < n[1] (insert inf to idx 0) or n[0] > n[1] (insert -inf to idx 0)
+        nums = [nums[i] for i in range(len(nums)) if i == 0 or nums[i] != nums[i - 1]] # santize duplicated value
+        if len(nums) < 3:
+            print(nums)
+            return len(nums)
+        isUp = True if nums[0] > nums[1] else False
+        nums = [-sys.maxint] + nums if isUp else [sys.maxint] + nums
+        res = 0
+        for i, n in enumerate(nums):
+            if (isUp and nums[i] > nums[i - 1]) or (not isUp and nums[i] < nums[i - 1]):
+                res += 1
+                isUp = True if not isUp else False
+        return res
+
 if __name__ == '__main__':
     nums = [1,17,5,10,13,15,10,5,16,8]
     nums = [1,7,4,9,2,5]

@@ -17,8 +17,8 @@ class Queue(object):
         """
         :rtype: nothing
         """
-        if self.deq == []:
-            while self.enq != []:
+        if not self.deq:
+            while self.enq:
                 self.deq.append(self.enq.pop())
         self.deq.pop()
 
@@ -26,15 +26,16 @@ class Queue(object):
         """
         :rtype: int
         """
-        return self.deq(0)
+        if not self.deq:
+            while self.enq:
+                self.deq.append(self.enq.pop())
+        return self.deq[-1]
 
     def empty(self):
         """
         :rtype: bool
         """
-        if self.enq or self.deq:
-            return False
-        return True
+        return (not self.enq) and (not self.deq)
 if __name__ == '__main__':
     q = Queue()
     q.push(1)

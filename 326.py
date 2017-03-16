@@ -9,17 +9,19 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
-        if n == 3:
-            for t in temp:
-                memo[t] = True
-        if n in memo:
-            return memo[n]
-        elif n % 3 != 0:
-            memo[n] = False
-        else:
-            temp.append(n)
-            Solution().isPowerOfThree(n//3)
-        return memo[n]
+        while n > 3:
+            if n % 3:
+                return False
+            n /= 3
+        return n == 1 or n == 3
+
+    def isPowerOfThree_refer(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+# not using loops and recursion
+        return n > 0 and pow(3 ,int(log(0x7FFFFFFF)/log(3))) % n == 0
 
 if __name__ == '__main__':
     memo = {3: True}

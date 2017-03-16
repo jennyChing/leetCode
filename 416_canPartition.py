@@ -51,18 +51,19 @@ class Solution(object):
         if len(nums) < 2 or sum(nums) % 2: return False
         nums.sort()
         dp = [False] * (sum(nums) // 2 + 1)
-        for i in range(1, len(nums) + 1):
+        for i in range(len(nums)):
             for j in range(sum(nums) // 2, 0, -1): # fill array from the back
-                if nums[i - 1] == j:
+                if nums[i] == j:
                     dp[j] = True
                     continue
-                dp[j] = dp[j] or (j >= nums[i - 1] and dp[j - nums[i - 1]])
+                dp[j] = dp[j] or (j >= nums[i] and dp[j - nums[i]])
+            print(dp)
         return dp[-1]
 
 if __name__ == "__main__":
-    nums = [1, 2, 3, 5]
-    nums = [1, 5, 11, 5]
     nums = [1,2,3,4,5,6,7]
     nums = [2,2,3,5]
+    nums = [1, 2, 3, 5]
+    nums = [1, 5, 11, 5]
     res = Solution().canPartition_refer(nums)
     print(res)

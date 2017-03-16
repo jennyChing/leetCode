@@ -29,6 +29,27 @@ class Solution(object):
                     memo[i] = max(memo[i], memo[j] + 1)
         return max(memo)
 
+# O(nlogn) solution
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        # idea: use memo to record current LIS, for n in nums replace all value = 第一個大於等於我的人
+        LIS = [nums[0]]
+        for n in nums[1:]:
+            if n > LIS[-1]:
+                LIS.append(n)
+            else:
+                for i, v in enumerate(LIS):
+                    if n <= v:
+                        LIS[i] = n
+                        break
+        return len(LIS)
+
 if __name__ == '__main__':
     nums = [10, 9, 2, 5, 3, 7, 101, 18]
     nums = [2, 15, 3, 7, 8, 6, 19]

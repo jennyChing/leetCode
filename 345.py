@@ -9,27 +9,35 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        set_vow = set()
-        arr_vow = ["a", "b", "c", "d", "e"]
-        for v in arr_vow:
-            set_vow.add(v)
-        a, b = 0, len(s) - 1
-        while a <= b:
-            print("a", a, s[a])
-            print("b", b, s[b])
-            if s[a] in set_vow and s[b] in set_vow:
-                print(s)
-                tmp_a, tmp_b = s[a], s[b]
-                s[a] = "e"
-                s[b] = tmp_a
-                print(s)
-                a += 1
-                b -= 1
-            elif s[a] not in set_vow:
-                a += 1
-            elif s[b] not in set_vow:
-                b -= 1
-        return s
+class Solution(object):
+    def reverseVowels(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        set_vow = set(["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"] )
+        front = []
+        end = []
+        i, j = 0, len(s) - 1
+        if len(s) < 2:
+            return s
+        while i < j:
+            if s[i] in set_vow and s[j] in set_vow:
+                front.append(s[j])
+                end.append(s[i])
+                i += 1
+                j -= 1
+            else:
+                if s[i] not in set_vow:
+                    front.append(s[i])
+                    i += 1
+                elif s[j] not in set_vow:
+                    end.append(s[j])
+                    j -= 1
+        if i == j:
+            end.append(s[j])
+        return ''.join(front + end[::-1])
+
 if __name__ == '__main__':
     Solution().reverseVowels("leetcode")
 

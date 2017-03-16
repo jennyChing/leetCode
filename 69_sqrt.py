@@ -20,8 +20,9 @@ class Solution(object):
                 r = mid - 1
             else:
                 l = mid + 1
+        print(l, r, mid)
         return mid if mid * mid < x else mid - 1
 
 if __name__ == "__main__":
-    res = Solution().mySqrt(13)
+    res = Solution().mySqrt(17)
     print(res)

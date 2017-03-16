@@ -49,13 +49,13 @@ class NumArray(object):
         :rtype: int
         """
         def _update(root):
-            if i == root.start == root.end - 1:
+            if i == root.start == root.end - 1: # i reach target index
                 root.val = val
                 return
-            if i < root.start or i >= root.end:
+            if i < root.start or i >= root.end: # i is out of range
                 return
-            _update(root.right)
-            _update(root.left)
+            _update(root.right) # traverse right subtree
+            _update(root.left) # traverse left subtree
             root.val = root.right.val + root.left.val
         _update(self.root)
 
@@ -68,11 +68,11 @@ class NumArray(object):
         :rtype: int
         """
         def _sumRange(root):
-            if i <= root.start and root.end <= j:
+            if i <= root.start and root.end <= j: # complete overlap
                 return root.val
-            if j <= root.start or i >= root.end:
+            if j <= root.start or i >= root.end: # no overlap
                 return 0
-            return _sumRange(root.left) + _sumRange(root.right)
+            return _sumRange(root.left) + _sumRange(root.right) # partial overlap
 
         j = j + 1
         return _sumRange(self.root)

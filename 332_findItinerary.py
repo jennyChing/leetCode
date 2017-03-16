@@ -23,13 +23,6 @@ class Solution(object):
         :type tickets: List[List[str]]
         :rtype: List[str]
         """
-        d = collections.defaultdict(list)
-        for t in tickets:
-            d[t[0]] += [t[1]]
-        # need to record visited cities? can transfer from other cities
-        start = "JFK"
-        res = []
-        self.path = ["JFK"]
         def dfs(start):
             if len(self.path) == len(tickets) + 1: # check if valid path
                 return self.path
@@ -45,6 +38,12 @@ class Solution(object):
                 d[start] += stop,
                 self.path.pop()
 
+        d = collections.defaultdict(list)
+        for t in tickets:
+            d[t[0]] += [t[1]]
+        # need to record visited cities? can transfer from other cities
+        start = "JFK"
+        self.path = ["JFK"]
         return dfs(start)
 
 if __name__ == "__main__":

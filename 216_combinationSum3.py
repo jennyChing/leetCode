@@ -13,21 +13,19 @@ class Solution(object):
         """
         if n > 9 * k:
             return []
-        res = []
         # Step1: starting point: start from 1
-        def __directed_combination(k, n, partial, start, res):
+        def __directed_combination(k, n, partial, start):
             # Step3: Append the valid combination to the result array
             if k == 0 and n == 0:
                 res.append(partial)
                 print(res)
-                return res
             for i in range(start, 10):
                 # Step2:  validate and recursive the rest part
                 if i <= n:
-                    __directed_combination(k - 1, n - i, partial + [i], i + 1, res)
-            return res
-
-        return  __directed_combination(k, n, [], 1, [])
+                    __directed_combination(k - 1, n - i, partial + [i], i + 1)
+        res = []
+        __directed_combination(k, n, [], 1)
+        return res
 if __name__ == "__main__":
     res = Solution().combinationSum3(3, 9)
     print(res)

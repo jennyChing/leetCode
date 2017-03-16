@@ -4,7 +4,7 @@
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 '''
 class Solution(object):
-    def generateParenthesis(self, n):
+    def generateParenthesis_add_1(self, n):
         """
         :type n: int
         :rtype: List[str]
@@ -12,7 +12,6 @@ class Solution(object):
 # use general backtracking
         result = []
         left, right = 0, 0 # staring point
-
         def backtracking(partial, left, right, n):
             if left >= right >= 0: # valid combinations check
                 if len(partial) == n * 2: # check if the iteration ends
@@ -23,6 +22,41 @@ class Solution(object):
                     backtracking(partial + ')', left, right + 1, n)
         backtracking('', left, right, n)
         return result
+
+    def generateParenthesis_minus_1(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        def backtrack(left_remain, right_remain, partial):
+            if right_remain == left_remain == 0: # success state: left = right = 0, append partial
+                res.append(partial)
+                return
+            if left_remain and left_remain <= right_remain:
+                backtrack(left_remain - 1, right_remain, partial + "(")
+            if right_remain and left_remain <= right_remain:
+                backtrack(left_remain, right_remain - 1, partial + ")")
+        res = []
+        backtrack(n, n, "")
+        return res
+
+
+    def generateParenthesis_refer(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        def backtrack(left_remain, right_remain, partial):
+            if left_remain:
+                backtrack(left_remain - 1, right_remain, partial + '(')
+            if right_remain > left_remain:
+                backtrack(left_remain, right_remain - 1, partial + ')')
+            if not right_remain: # left, right both are zero
+                res.append(partial)
+
+        res = []
+        backtrack(n, n, "")
+        return res
 
 # using generator!!!
       #  def __directed_generate(partial, left_remain, right_remain):

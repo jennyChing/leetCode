@@ -45,12 +45,13 @@ class Solution(object):
 
         def __directed_dfs(position, visited):
             longest_path = []
+            visited.add(position)
             for node in tree[position]:
-                visited.add(position)
                 if node not in visited:
                     path = __directed_dfs(node, visited)
                     if len(path) > len(longest_path):
                         longest_path = path
+                print(node, longest_path)
             longest_path.append(position)
             return longest_path
 
@@ -59,6 +60,7 @@ class Solution(object):
             tree[e[0]].append(e[1])
             tree[e[1]].append(e[0])
         path = __directed_dfs(0, set())
+        print(path)
         diameter = __directed_dfs(path[0], set())
         print(diameter)
         mid = len(diameter) >> 1
@@ -66,7 +68,8 @@ class Solution(object):
         return [path[mid]] if len(diameter) % 2 else sorted(diameter[mid - 1:mid + 1])
 
 if __name__ == "__main__":
-    edges = [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]
+    edges = [[1,0],[1,2],[1,3]]
     edges = [[0,1],[0,2]]
-    res = Solution().findMinHeightTrees(3, edges)
+    edges = [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]
+    res = Solution().findMinHeightTrees(6, edges)
     print(res)

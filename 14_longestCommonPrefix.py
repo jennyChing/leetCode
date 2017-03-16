@@ -10,12 +10,30 @@ class Solution(object):
         :rtype: str
         """
         for i in range(len(strs[0])):
-            check = strs[0][i]
             for s in strs:
-                print(s, i, strs[0])
-                if s[i] != check or i >= len(s):
+                if s[i] != strs[0][i] or i >= len(s):
                     return strs[0][:i]
         return strs[0]
+
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if not strs:
+            return ""
+        # deal with different length of strs
+        common = strs[0]
+        for i in range(1, len(strs)):
+            j = 0
+            while j < len(common):
+                if j >= len(strs[i]) or strs[i][j] != common[j]:
+                    common = common[:j]
+                j += 1
+        return common
+
+
 if __name__ == '__main__':
     strs = ["a"]
     res = Solution().longestCommonPrefix(strs)

@@ -17,7 +17,55 @@ There are a total of 2 courses to take. To take course 1 you should have finishe
 4, [[1,0],[2,0],[3,1],[3,2]]
 There are a total of 4 courses to take. To take course 3 you should have finished both courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. So one correct course order is [0,1,2,3]. Another correct ordering is[0,2,1,3].
 '''
+import collections
 class Solution(object):
+    def findOrder_dfs(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """
+# need 2 way lookups: c -> p and p -> c
+        graph = [[] for _ in range(numCourses)]
+        neigh = [[] for _ in range(numCourses)]
+        for c, p in prerequisites:
+            graph[c].append(p)
+            neigh[p].append(c)
+        stack = [i for i in range(numCourses) if not graph[i]] # start
+        res = []
+        while stack:
+            prerequisites = stack.pop()
+            res.append(prerequisites)
+            for course in neigh[prerequisites]:
+                print(prerequisites, course)
+                graph[course].remove(prerequisites)
+                if not graph[course]: # when all courses removed
+                    stack.append(course) # add to the process queue
+        return res if len(res) == numCourses else [] # all courses in graph used or not
+
+    def findOrder_bfs(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """
+# need 2 way lookups: c -> p and p -> c
+        graph = [[] for _ in range(numCourses)]
+        neigh = [[] for _ in range(numCourses)]
+        for c, p in prerequisites:
+            graph[c].append(p)
+            neigh[p].append(c)
+        queue = collections.deque([i for i in range(numCourses) if not graph[i]]) # start with course that has no prerequisites
+        res = []
+        while queue:
+            prerequisites = queue.popleft()
+            res.append(prerequisites)
+            for course in neigh[prerequisites]:
+                graph[course].remove(prerequisites)
+                if not graph[course]: # when all courses removed
+                    queue.append(course) # add to the process queue
+        return res if len(res) == numCourses else []
+
     def findOrder(self, numCourses, prerequisites):
         """
         :type numCourses: int
@@ -54,9 +102,11 @@ class Solution(object):
         return res
 
 if __name__ == "__main__":
-    numCourses = 4
-    prerequisites = [[1,0],[2,0],[3,1],[3,2]]
     numCourses = 2
     prerequisites = [[0,1]]
-    res = Solution().findOrder(numCourses, prerequisites)
+    numCourses = 4
+    prerequisites = [[1,0],[2,0],[3,1],[3,2]]
+    res = Solution().findOrder_bfs(numCourses, prerequisites)
+    print(res)
+    res = Solution().findOrder_dfs(numCourses, prerequisites)
     print(res)

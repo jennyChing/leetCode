@@ -22,7 +22,7 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        def __find_pal(left, right, s):
+        def __find_pal(left, right):
             while left >= 0 and right < len(s) and s[left] == s[right]:
                 left -= 1
                 right += 1
@@ -30,10 +30,10 @@ class Solution(object):
 
         max_pdm = ""
         for i in range(len(s)):
-            odd = __find_pal(i, i, s)
+            odd = __find_pal(i, i)
             if len(odd) > len(max_pdm):
                 max_pdm = odd
-            even = __find_pal(i, i + 1, s)
+            even = __find_pal(i, i + 1)
             if len(even) > len(max_pdm):
                 max_pdm = even
 

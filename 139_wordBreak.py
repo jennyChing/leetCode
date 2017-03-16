@@ -35,8 +35,6 @@ class Solution(object):
                     break
         return DP[-1]
 
-
-
 # iteratively look back substring 0 ~ max_word_len characters to see if any word from dict is matched
         #def __directed_dfs(idx, visited):
         #    print(idx, len_i)

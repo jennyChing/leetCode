@@ -15,12 +15,11 @@ class Solution(object):
         split_input = []
 
 # Step1: parsing, split the input by operators
-        opdict = {'*':operator.mul, '-': operator.sub, '+':operator.add}
         input+= '-'
         print(input)
         i = 0
         for j in range(len(input)):
-            if input[j] in opdict:
+            if input[j] in '*-+':
                 print(input[j], input, i, j)
                 split_input.append(int(input[i:j]))
                 split_input.append(input[j])
@@ -34,7 +33,6 @@ class Solution(object):
             if len(split_input) == 1:
                 return [split_input[0]]
             res = []
-
             for i, v in enumerate(split_input):
                 if isinstance(v, str) and v in "*-+":
                     left, right = __directed_compute(split_input[:i]), __directed_compute(split_input[i + 1:])
@@ -51,7 +49,6 @@ class Solution(object):
         return __directed_compute(split_input)
 
 if __name__ == "__main__":
-    res = Solution().diffWaysToCompute('2-1-1')
     res = Solution().diffWaysToCompute('2*3-4*5')
     print(res)
 

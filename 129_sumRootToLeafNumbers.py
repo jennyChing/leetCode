@@ -33,16 +33,11 @@ class Solution(object):
         def __directed_dfs(root, pathSum):
             if not root:
                 return 0
-
             pathSum = 10 * pathSum + root.val
-
-            # reach leaf
-            if not root.left and not root.right:
+            if not root.left and not root.right: # reach leaf
                 return pathSum
             return __directed_dfs(root.left, pathSum) + __directed_dfs(root.right, pathSum)
-
         return __directed_dfs(root, 0)
-
 
 if __name__ =='__main__':
     root = TreeNode(1)

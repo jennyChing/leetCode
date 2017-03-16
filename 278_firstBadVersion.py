@@ -13,9 +13,8 @@ class Solution(object):
         find the earliest True with binary search
         """
         left, right = 1, n
-        mid = (right - left) // 2 + left
         while right > left:
-            mid = (right - left) // 2 + left
+            mid = (right + left) // 2
             if isBadVersion(mid) == True:
                 right = mid
             else:

@@ -25,11 +25,31 @@ class Solution(object):
             curr = AppendNode(curr, head.val)
             head = head.next
         return curr
+
+    def reverseList_2(self, head):
+	dummy = ListNode(0)
+        if not head or not head.next:
+            return head
+        curr = head
+        while curr.next:
+            curr.next = dummy.next
+            dummy.next = curr
+            curr = next
+        curr.next = dummy.next
+        dummy.next = curr
+        return dummy.next
+
+    def reverseList_refer(self, head):
+	dummy = ListNode(0)
+        while head:
+            dummy.next, head.next, head = head, dummy.next, head.next
+        return dummy.next
+
 if __name__ == '__main__':
    head = ListNode(5)
    head.next = ListNode(1)
    head.next.next = ListNode(3)
-   res = Solution().reverseList(head)
+   res = Solution().reverseList_2(head)
    while res:
        print(res.val)
        res = res.next

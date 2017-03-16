@@ -42,13 +42,22 @@ class BurceForce_Solution(object):
         :rtype: int
         """
         def __dfs(root, target): # use root as start node to traverse
-            if root:
-                return int(root.val == target) + __dfs(root.left, target - root.val) + __dfs(root.right, target - root.val)
-            return 0
+            if not root:
+                return
+            print(root.val, target)
+            if root.val == target:
+                self.cnt[0] += 1
+                print(self.cnt)
+            __dfs(root.left, target - root.val)
+            __dfs(root.right, target - root.val)
 
+        self.cnt = [0]
         if root: # use each node as new start
-            return __dfs(root, sum) + __dfs(root.left, sum) + __dfs(root.right, sum)
-        return 0
+           # print(__dfs(root.right, sum), __dfs(root, sum))
+            __dfs(root, sum)
+            self.pathSum(root.left, sum)
+            self.pathSum(root.right, sum)
+        return self.cnt[0]
 
 import collections
 class Two_sum_Solution(object):
@@ -62,6 +71,7 @@ class Two_sum_Solution(object):
         def __dfs(root, target, so_far, memo):
             if not root:
                 return
+            print(memo)
             remaining = so_far + root.val - target
             print("node:", root.val, "sum:", target, "so far:", so_far, "what's left:",  remaining)
             if remaining in memo:
@@ -81,12 +91,12 @@ class Two_sum_Solution(object):
 
 
 if __name__ == "__main__":
-    root = TreeNode(10)
+    root = TreeNode(8)
     root.left = TreeNode(5)
     root.right = TreeNode(-3)
     root.right.right = TreeNode(11)
     root.left.left = TreeNode(3)
-    root.left.right = TreeNode(2)
+    root.left.right = TreeNode(8)
     root.left.right.right = TreeNode(1)
     root.left.left.left = TreeNode(3)
     root.left.left.right = TreeNode(-2)

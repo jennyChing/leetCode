@@ -9,16 +9,19 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        all_set = set()
-        repeat_set = set()
-        for c in s:
-            if c in all_set:
-                repeat_set.add(c)
-            else:
-                all_set.add(c)
-        unique = all_set.difference(repeat_set)
-        for i in range(len(s)):
-            if s[i] in unique:
+	memo = collections.Counter(s)
+        for i, c in enumerate(s):
+            if memo[c] == 1:
                 return i
+        return -1
+
+    def firstUniqChar_faster(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+# loop through 26 alphebets (O(1))
+        return min([s.find(c) for c in string.ascii_lowercase if s.count(c)==1] or [-1])
+
 if __name__ == '__main__':
     print(Solution().firstUniqChar("loveleetcode"))

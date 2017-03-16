@@ -47,6 +47,22 @@ class Solution(object):
         temp = []
         Solution().recursive(n, temp)
         return memo[n]
+
+    def isHappy_2(self, n):
+        '''
+        :type n: int
+        :rtype: bool
+        '''
+	memo = set()
+        while n != 1 and n not in memo:
+            memo.add(n)
+            tmp = (n % 10) ** 2
+            while n > 9:
+                n //= 10
+                tmp += (n % 10) ** 2
+            n = tmp
+        return n == 1
+
 if __name__ == '__main__':
     Solution().isHappy(19)
     print(memo)

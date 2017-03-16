@@ -53,9 +53,52 @@ class Solution(object):
             nextMin, i, j = heappop(h)
             res.append([nums1[i], nums2[j]])
         return res
+# second attemp
+import heapq
+class Solution(object):
+    def kSmallestPairs(self, nums1, nums2, k):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :type k: int
+        :rtype: List[List[int]]
+        """
+# Sol1: 1-liner using heapq API:
+        return heapq.nsmallest(k, ([n1, n2] for n1 in nums1 for n2 in nums2), key=sum)
+
+# Sol2: heappop min_heap k times:
+    def kSmallestPairs(self, nums1, nums2, k):
+        if len(nums1)*len(nums2) <= k:
+            return [[i, j] for i in nums1 for j in nums2]
+        min_heap = [(n1 + n2, n1, n2) for n1 in nums1 for n2 in nums2]
+        heapq.heapify(min_heap)
+        pairs = []
+        for i in range(k):
+            pair_sum, n1, n2= heapq.heappop(min_heap)
+            pairs.append([n1, n2])
+        return pairs
+
+#Sol3: Efficient way, heappush (i, j + 1) and (i + 1, j) to min_heap
+    def kSmallestPairs(self, nums1, nums2, k):
+        min_heap= []
+        heapq.heappush(min_heap, [nums1[0] + nums2[0], 0, 0])
+        pairs = []
+        while min_heap and len(pairs) < k:
+            _, i, j = heapq.heappop(min_heap)
+            pairs.append([nums1[i], nums2[j]])
+            if j + 1 < len(nums2): # move right 1 col
+                heapq.heappush(min_heap, [nums1[i] + nums2[j + 1], i, j + 1])
+                print(i, j + 1)
+            if j == 0 and i + 1 < len(nums1): # add cell below as candidate
+                heapq.heappush(min_heap, [nums1[i + 1] + nums2[j], i + 1, j])
+                print(i + 1, j)
+            print(min_heap)
+        return pairs
 
 if __name__ == "__main__":
     nums1 = [1, 1, 2]
     nums2 = [1, 2, 3]
-    res = Solution().kSmallestPairs(nums1, nums2, 9)
+    nums1 = [-10,-4,0,0,6]
+    nums2 = [3,5,6,7,8,100]
+    res = Solution().kSmallestPairs(nums1, nums2, 14)
     print(res)

@@ -24,15 +24,12 @@ class Solution(object):
         :type wordList: Set[str]
         :rtype: int
         """
-        wordList.append(beginWord)
-        wordList.append(endWord)
         graph = {}
         for w in wordList:
             for i in range(len(w)):
                 s = w[:i] + "_" + w[i + 1:]
                 graph[s] = graph.get(s, []) + [w]
         def __directed_bfs(beginWord):
-            level = 0
             q, visited = collections.deque([(beginWord, 1)]), set()
             while q:
                 word, steps = q.popleft()

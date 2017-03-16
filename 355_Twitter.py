@@ -55,7 +55,7 @@ class Twitter(object):
         """
         self.timestamp += 1
         self.post_dict[userId].append((self.timestamp, tweetId))
-        self.follow_dict[userId] = {userId}
+        self.follow_dict[userId].add(userId)
 
     def getNewsFeed(self, userId):
         """
