@@ -26,13 +26,32 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-# idea: path can be any root + left + right
-
+# idea: keep a global max and traverse all paths to compare sum with max
+        self.maxSum = -(1<<31)
+        def dfs(root):
+            if not root:
+                return 0
+            print(root.val, self.maxSum)
+            pathSum = root.val
+            leftmax = dfs(root.left)
+            rightmax = dfs(root.right)
+            print(root.val, leftmax, rightmax)
+            if leftmax > 0:
+                pathSum += leftmax
+            if rightmax > 0:
+                pathSum += rightmax
+            self.maxSum = max(self.maxSum, pathSum)
+            return max(root.val, root.val + leftmax, root.val + rightmax)
+        dfs(root)
+        return self.maxSum
 
 if __name__ == '__main__':
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
+    root = TreeNode(-1)
+    root.left = TreeNode(-2)
+    root.left.left = TreeNode(-3)
+    root.right = TreeNode(6)
+    root.right.left = TreeNode(4)
+    root.right.right = TreeNode(5)
     res = Solution().maxPathSum(root)
     print(res)
 

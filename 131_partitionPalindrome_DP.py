@@ -19,27 +19,25 @@ class Solution(object):
         :type s: str
         :rtype: List[List[str]]
         """
-# use DP table to record the substrings
-        self.memo = [None] * (len(s) + 1)
-        self.memo[0]=[[]]
-        return self.__directed_partition(s)
+        def __directed_partition(s):
+            s_len = len(s)
+            if memo[s_len]:
+                return memo[s_len] # avoid repeat calling
+            res = []
+            for i in range(len(s) - 1, -1, -1): # for loop split by the back
+                curr = s[i:] # cut s into two parts by index i
+                print("split:", curr)
+                if curr == curr[::-1]: # check palindrome here
+                    print("givin next", s[:i])
+                    prefix = __directed_partition(s[:i])
+                    res += [r + [curr] for r in prefix]
+            memo[s_len] = res
+            print(memo)
+            return res
+        memo = [0] * (len(s) + 1)
+        memo[0]=[[]]
+        return __directed_partition(s)
 
-    def __directed_partition(self, s):
-        s_len = len(s)
-        if self.memo[s_len]:
-            return self.memo[s_len] # avoid repeat calling
-        res = []
-
-    # for loop start checking from the back
-        for i in range(len(s) - 1, -1, -1):
-            curr = s[i:] # cut s into two parts by index i
-            print(curr)
-            if curr == curr[::-1]: # check palindrome here
-                print("givin next", s[:i])
-                prefix = self.__directed_partition(s[:i])
-                res += [r + [curr] for r in prefix]
-        self.memo[s_len] = res
-        return res
 
 if __name__ == "__main__":
     res = Solution().partition("aab")
